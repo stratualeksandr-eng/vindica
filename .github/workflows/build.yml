@@ -69,7 +69,7 @@ jobs:
         run: npm ci
       - name: Сборка
         working-directory: desktop
-        shell:bash
+        shell: bash
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
