@@ -1,0 +1,100 @@
+{
+  "id": "./",
+  "name": "Верни себя себе",
+  "short_name": "Верни себя",
+  "description": "Стоический дневник, привычки, копилка идей и тренировки с гирей.",
+  "lang": "ru",
+  "dir": "ltr",
+  "start_url": "./#today",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ECE7DF",
+  "theme_color": "#ECE7DF",
+  "categories": [
+    "lifestyle",
+    "health",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Надиктовать идею",
+      "short_name": "Идея",
+      "description": "Сразу записать идею голосом в копилку",
+      "url": "./?new=i#today",
+      "icons": [
+        {
+          "src": "sc-idea.png",
+          "sizes": "192x192",
+          "type": "image/png",
+          "purpose": "any"
+        },
+        {
+          "src": "sc-idea-mask.png",
+          "sizes": "192x192",
+          "type": "image/png",
+          "purpose": "maskable"
+        }
+      ]
+    },
+    {
+      "name": "Утро",
+      "short_name": "Утро",
+      "description": "Начало дня по Марку Аврелию",
+      "url": "./?new=m#today",
+      "icons": [
+        {
+          "src": "sc-morning.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Вечер",
+      "short_name": "Вечер",
+      "description": "Разбор дня по Сенеке",
+      "url": "./?new=e#today",
+      "icons": [
+        {
+          "src": "sc-evening.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Голосовая заметка",
+      "short_name": "Заметка",
+      "description": "Скажи вслух, текст запишется сам",
+      "url": "./?new=v#today",
+      "icons": [
+        {
+          "src": "sc-voice.png",
+          "sizes": "96x96",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "name": "vindica-desktop",
+  "productName": "Верни себя себе",
+  "version": "1.0.0",
+  "private": true,
+  "description": "«Верни себя себе» на компьютере: дневник стоика, план и напоминания",
+  "author": "Vindica",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --publish never"
+  },
+  "devDependencies": {
+    "electron": "45.4.1",
+    "electron-builder": "26.18.0"
+  },
+  "build": {
+    "appId": "app.vindica.desktop",
+    "productName": "Верни себя себе",
+    "executableName": "Vindica",
+    "artifactName": "Vindica-${version}-${os}.${ext}",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "build/tray.png",
+      "build/tray@2x.png",
+      "build/icon.png",
+      "www/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "artifactName": "Vindica-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Верни себя себе",
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": false
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "universal"
+          ]
+        }
+      ],
+      "category": "public.app-category.productivity",
+      "icon": "build/icon.png",
+      "artifactName": "Vindica-${version}-mac.${ext}"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "category": "Office",
+      "icon": "build/icon.png",
+      "artifactName": "Vindica-${version}-linux.${ext}",
+      "syncDesktopName": true
+    },
+    "publish": null
+  },
+  "desktopName": "vindica.desktop"
+}
