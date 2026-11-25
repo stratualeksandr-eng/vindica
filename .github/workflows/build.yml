@@ -90,7 +90,7 @@ jobs:
   release:
     name: Выпуск
     needs: [android, desktop]
-    if: ${{ !cancelled() && needs.android.result == 'success' }}
+    if: ${{ !cancelled() && needs.android.result == 'success' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v7

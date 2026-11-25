@@ -24,6 +24,24 @@
 
         </activity>
 
+        <!-- «Покупки» on the home screen -->
+        <receiver
+            android:name=".ShopWidget"
+            android:exported="false"
+            android:label="@string/widget_shop_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/shop_widget_info" />
+        </receiver>
+
+        <service
+            android:name=".ShopWidgetService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

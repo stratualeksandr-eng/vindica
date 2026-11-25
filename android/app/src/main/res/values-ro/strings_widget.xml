@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_shop_name">Cumpărături</string>
+    <string name="widget_shop_desc">Lista de cumpărături: atinge ce ai cumpărat și dispare</string>
+    <string name="widget_shop_add">Adaugă o cumpărătură</string>
+    <string name="widget_shop_empty">Lista e goală</string>
+</resources>

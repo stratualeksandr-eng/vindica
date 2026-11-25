@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- the app's own palette (--s1, --ink, --mut, --brz, --red/--redink of the «+» button) -->
+<resources>
+    <color name="widget_bg">#F7F4EF</color>
+    <color name="widget_line">#242E2216</color>
+    <color name="widget_ink">#1E1915</color>
+    <color name="widget_mut">#685D51</color>
+    <color name="widget_bronze">#7A5726</color>
+    <color name="widget_add">#9A2A20</color>
+    <color name="widget_add_ink">#FFF6EF</color>
+</resources>

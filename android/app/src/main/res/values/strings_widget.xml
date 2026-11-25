@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_shop_name">Покупки</string>
+    <string name="widget_shop_desc">Список покупок: коснись купленного, и оно уйдёт</string>
+    <string name="widget_shop_add">Добавить покупку</string>
+    <string name="widget_shop_empty">Список пуст</string>
+</resources>
