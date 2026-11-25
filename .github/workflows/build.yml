@@ -38,6 +38,8 @@ jobs:
       - name: Зависимости
         run: npm ci
       - name: Веб-часть в приложение
+        env:
+          VINDICA_VERSION: 1.0.${{ github.run_number }}
         run: node scripts/prepare-www.js www && npx cap sync android
       - name: Сборка APK
         working-directory: android
@@ -63,6 +65,8 @@ jobs:
         with:
           node-version: 22
       - name: Веб-часть в программу
+        env:
+          VINDICA_VERSION: 1.0.${{ github.run_number }}
         run: node scripts/prepare-www.js desktop/www
       - name: Зависимости
         working-directory: desktop
