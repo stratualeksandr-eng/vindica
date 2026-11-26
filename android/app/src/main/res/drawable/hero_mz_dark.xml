@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- the bronze meander under the first page, repeated across -->
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+    android:src="@drawable/hero_mz_tile_dark"
+    android:tileMode="repeat" />

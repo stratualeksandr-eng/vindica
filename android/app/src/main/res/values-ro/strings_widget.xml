@@ -4,4 +4,17 @@
     <string name="widget_shop_desc">Lista de cumpărături: atinge ce ai cumpărat și dispare</string>
     <string name="widget_shop_add">Adaugă o cumpărătură</string>
     <string name="widget_shop_empty">Lista e goală</string>
+    <string name="widget_hero_name">Azi</string>
+    <string name="widget_hero_desc">Prima pagină: cadranul solar, salutul, Memento mori și numărătorile inverse</string>
+    <string name="widget_hero_small_name">Ceasul</string>
+    <string name="widget_hero_small_desc">Cadranul solar și numărătorile: TEMPVS NOSTRVM, până la culcare, până la sfârșitul lucrului</string>
+    <string name="hero_brand">Revendică-te ție însuți</string>
+    <string name="hero_motto">Totul e străin, doar timpul e al nostru. Seneca</string>
+    <string name="hero_dial">Cadran solar</string>
+    <string-array name="hero_hello">
+        <item>Noapte bună</item>
+        <item>Bună dimineața</item>
+        <item>Bună ziua</item>
+        <item>Bună seara</item>
+    </string-array>
 </resources>

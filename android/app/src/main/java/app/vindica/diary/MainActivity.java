@@ -15,6 +15,8 @@ public class MainActivity extends BridgeActivity {
         restoring = savedInstanceState != null;
         registerPlugin(VindicaWidgetPlugin.class);
         super.onCreate(savedInstanceState);
+        /* opened by a widget from cold: the page picks the request up once its data is in */
+        if (!restoring) keepOpen(getIntent());
         restoring = false;
         ready = true;
     }
@@ -27,7 +29,7 @@ public class MainActivity extends BridgeActivity {
         if (ready && getBridge() != null) getBridge().triggerWindowJSEvent("vindicawidget");
     }
 
-    /* the widget asked to open the shopping list («shop») or to add to it («add»): the page picks it up when it is ready */
+    /* a widget asked to open the shopping list («shop»), to add to it («add») or «Сегодня» («today»): the page picks it up when it is ready */
     private boolean keepOpen(Intent intent) {
         String what = intent != null ? intent.getStringExtra(ShopWidget.EXTRA_OPEN) : null;
         if (what == null) return false;

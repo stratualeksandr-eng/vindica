@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- the app's sign: a half sun on the horizon, three rays and a red hand -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="32"
+    android:viewportHeight="32">
+    <path android:pathData="M5,22a11,11 0 0,1 22,0" android:strokeColor="#D0A867" android:strokeWidth="1.6" />
+    <path android:pathData="M16,22L9.5,15.5M16,22V11M16,22l6.5,-6.5" android:strokeColor="#D0A867" android:strokeWidth="1.1" />
+    <path android:pathData="M16,22L7,18.5" android:strokeColor="#E0705E" android:strokeLineCap="round" android:strokeWidth="2.4" />
+    <path android:pathData="M2.5,22h27" android:strokeColor="#ECE5D9" android:strokeWidth="1.6" />
+</vector>

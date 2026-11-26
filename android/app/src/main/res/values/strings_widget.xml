@@ -4,4 +4,17 @@
     <string name="widget_shop_desc">Список покупок: коснись купленного, и оно уйдёт</string>
     <string name="widget_shop_add">Добавить покупку</string>
     <string name="widget_shop_empty">Список пуст</string>
+    <string name="widget_hero_name">Сегодня</string>
+    <string name="widget_hero_desc">Первая страница: солнечные часы, приветствие, Memento mori и обратные отсчёты</string>
+    <string name="widget_hero_small_name">Часы</string>
+    <string name="widget_hero_small_desc">Солнечные часы и отсчёты: TEMPVS NOSTRVM, до отбоя, до конца работы</string>
+    <string name="hero_brand">Верни себя себе</string>
+    <string name="hero_motto">Всё чужое, лишь время наше. Сенека</string>
+    <string name="hero_dial">Солнечные часы</string>
+    <string-array name="hero_hello">
+        <item>Доброй ночи</item>
+        <item>Доброе утро</item>
+        <item>Добрый день</item>
+        <item>Добрый вечер</item>
+    </string-array>
 </resources>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- beside the name: Memento mori, the weeks lived and the bar of eighty years; TEMPVS NOSTRVM, the free hours left;
+     PROTINVS VIVE, the time until lights out (until rising, once asleep) and until the working day ends -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/hero_mm"
+    android:layout_width="130dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="6dp"
+    android:gravity="end"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/hero_mm_l"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="serif"
+        android:includeFontPadding="false"
+        android:letterSpacing="0.36"
+        android:maxLines="1"
+        android:text="MEMENTO MORI"
+        android:textColor="#D0A867"
+        android:textSize="8.5dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:baselineAligned="true"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/hero_mm_n"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="#ECE5D9"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/hero_mm_u"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:ellipsize="end"
+            android:fontFamily="serif"
+            android:gravity="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="#A89E91"
+            android:textSize="11dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/hero_mm_bar"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="4dp"
+        android:contentDescription="@null"
+        android:scaleType="fitXY" />
+
+    <AdapterViewFlipper
+        android:id="@+id/hero_tn"
+        android:layout_width="match_parent"
+        android:layout_height="19dp"
+        android:layout_marginTop="9dp"
+        android:animateFirstView="false"
+        android:autoStart="true"
+        android:flipInterval="1000"
+        android:inAnimation="@animator/hero_in"
+        android:loopViews="false"
+        android:outAnimation="@animator/hero_out" />
+
+    <TextView
+        android:id="@+id/hero_tn_l"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:includeFontPadding="false"
+        android:letterSpacing="0.36"
+        android:maxLines="1"
+        android:text="TEMPVS NOSTRVM"
+        android:textColor="#D0A867"
+        android:textSize="8.5dp" />
+
+    <LinearLayout
+        android:id="@+id/hero_sl_row"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:baselineAligned="true"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/hero_sl_l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:maxLines="1"
+            android:textColor="#A89E91"
+            android:textSize="11.5dp" />
+
+        <Chronometer
+            android:id="@+id/hero_sl_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:fontFamily="serif"
+            android:fontFeatureSettings="tnum"
+            android:maxLines="1"
+            android:textColor="#ECE5D9"
+            android:textSize="14.5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/hero_wk_row"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:baselineAligned="true"
+        android:gravity="end"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/hero_wk_l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:maxLines="1"
+            android:textColor="#A89E91"
+            android:textSize="11.5dp" />
+
+        <Chronometer
+            android:id="@+id/hero_wk_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:fontFamily="serif"
+            android:fontFeatureSettings="tnum"
+            android:maxLines="1"
+            android:textColor="#ECE5D9"
+            android:textSize="14.5dp" />
+
+        <TextView
+            android:id="@+id/hero_wk_t"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:fontFamily="serif"
+            android:maxLines="1"
+            android:textColor="#ECE5D9"
+            android:textSize="11.5dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/hero_pv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:fontFamily="serif"
+        android:includeFontPadding="false"
+        android:letterSpacing="0.36"
+        android:maxLines="1"
+        android:text="PROTINVS VIVE"
+        android:textColor="#D0A867"
+        android:textSize="8.5dp" />
+</LinearLayout>

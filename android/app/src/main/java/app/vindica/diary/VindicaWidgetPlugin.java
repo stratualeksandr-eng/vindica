@@ -12,7 +12,8 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 
 import org.json.JSONException;
 
-/* the page and the home-screen widget: the list goes to the widget, marks made on the widget come back */
+/* the page and the home-screen widgets: the shopping list goes to «Покупки», marks made there come back;
+   the days ahead go to «Сегодня» and «Часы» */
 @CapacitorPlugin(name = "VindicaWidget")
 public class VindicaWidgetPlugin extends Plugin {
     private SharedPreferences prefs() {
@@ -28,6 +29,23 @@ public class VindicaWidgetPlugin extends Plugin {
             .putString("empty", call.getString("empty", getContext().getString(R.string.widget_shop_empty)))
             .commit();
         ShopWidget.refreshAll(getContext());
+        call.resolve();
+    }
+
+    /* «Сегодня» on the home screen: the texts of the days ahead, as the page wrote them */
+    @PluginMethod
+    public void setHero(PluginCall call) {
+        String json = call.getString("json", null);
+        if (json == null || json.isEmpty()) {
+            call.reject("json");
+            return;
+        }
+        prefs().edit().putString(HeroWidget.KEY, json).commit();
+        try {
+            HeroWidget.renderAll(getContext());
+        } catch (RuntimeException e) {
+            /* the widget looks again on its own within a minute */
+        }
         call.resolve();
     }
 
