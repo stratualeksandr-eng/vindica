@@ -1,0 +1,307 @@
+{
+ "n": 3,
+ "title": "Деньги и договоры",
+ "title_ro": "Bani și contracte",
+ "w": [
+  {
+   "w": "contract",
+   "ru": "договор",
+   "ro": "contract",
+   "ex": "Both parties signed the contract yesterday."
+  },
+  {
+   "w": "clause",
+   "ru": "пункт договора",
+   "ro": "clauză",
+   "ex": "Read the payment clause carefully."
+  },
+  {
+   "w": "terms and conditions",
+   "ru": "условия (договора)",
+   "ro": "termeni și condiții",
+   "ex": "The terms and conditions are on the back of the order."
+  },
+  {
+   "w": "liability",
+   "ru": "ответственность (юридическая)",
+   "ro": "răspundere",
+   "ex": "The contractor has full liability for any damage."
+  },
+  {
+   "w": "penalty",
+   "ru": "штраф, неустойка",
+   "ro": "penalitate",
+   "ex": "There is a penalty for each day of delay."
+  },
+  {
+   "w": "breach of contract",
+   "ru": "нарушение договора",
+   "ro": "încălcarea contractului",
+   "ex": "Missing the deadline would be a breach of contract."
+  },
+  {
+   "w": "amendment",
+   "ru": "изменение, дополнение к договору",
+   "ro": "act adițional",
+   "ex": "We need an amendment to change the delivery date."
+  },
+  {
+   "w": "renewal",
+   "ru": "продление",
+   "ro": "reînnoire",
+   "ex": "The contract is up for renewal in June."
+  },
+  {
+   "w": "termination",
+   "ru": "расторжение",
+   "ro": "reziliere",
+   "ex": "Either party may ask for termination with 30 days' notice."
+  },
+  {
+   "w": "deposit",
+   "ru": "задаток, залог",
+   "ro": "depozit, garanție",
+   "ex": "We paid a deposit to reserve the equipment."
+  },
+  {
+   "w": "down payment",
+   "ru": "первоначальный взнос",
+   "ro": "avans",
+   "ex": "The down payment is 20% of the total price."
+  },
+  {
+   "w": "installment",
+   "ru": "очередной платёж (в рассрочку)",
+   "ro": "rată",
+   "ex": "We will pay in three monthly installments."
+  },
+  {
+   "w": "outstanding balance",
+   "ru": "остаток к оплате",
+   "ro": "sold restant",
+   "ex": "The outstanding balance is due on delivery."
+  },
+  {
+   "w": "accounts payable",
+   "ru": "кредиторская задолженность",
+   "ro": "datorii către furnizori",
+   "ex": "Accounts payable went up this quarter."
+  },
+  {
+   "w": "accounts receivable",
+   "ru": "дебиторская задолженность",
+   "ro": "creanțe",
+   "ex": "Our accounts receivable are too high because clients pay late."
+  },
+  {
+   "w": "expense",
+   "ru": "расход, затрата",
+   "ro": "cheltuială",
+   "ex": "Travel is our biggest expense this month."
+  },
+  {
+   "w": "overhead",
+   "ru": "накладные расходы",
+   "ro": "cheltuieli de regie",
+   "ex": "Rent and salaries are part of our overhead."
+  },
+  {
+   "w": "depreciation",
+   "ru": "амортизация",
+   "ro": "amortizare",
+   "ex": "The truck loses value through depreciation."
+  },
+  {
+   "w": "asset",
+   "ru": "актив, имущество",
+   "ro": "activ",
+   "ex": "The new building is our biggest asset."
+  },
+  {
+   "w": "equity",
+   "ru": "собственный капитал, доля",
+   "ro": "capital propriu",
+   "ex": "The founders kept 60% of the equity."
+  },
+  {
+   "w": "dividend",
+   "ru": "дивиденд",
+   "ro": "dividend",
+   "ex": "The company will pay a dividend this year."
+  },
+  {
+   "w": "gross margin",
+   "ru": "валовая маржа",
+   "ro": "marjă brută",
+   "ex": "Our gross margin improved to 35%."
+  },
+  {
+   "w": "operating costs",
+   "ru": "операционные расходы",
+   "ro": "costuri operaționale",
+   "ex": "Energy is a large part of our operating costs."
+  },
+  {
+   "w": "capital expenditure",
+   "ru": "капитальные затраты",
+   "ro": "cheltuieli de capital",
+   "ex": "New machines are a capital expenditure."
+  },
+  {
+   "w": "payback period",
+   "ru": "срок окупаемости",
+   "ro": "perioadă de recuperare a investiției",
+   "ex": "The payback period for the solar panels is seven years."
+  },
+  {
+   "w": "projection",
+   "ru": "прогноз, расчёт на будущее",
+   "ro": "proiecție",
+   "ex": "Our sales projection for next year is cautious."
+  },
+  {
+   "w": "audit",
+   "ru": "аудит, проверка",
+   "ro": "audit",
+   "ex": "The annual audit starts next week."
+  },
+  {
+   "w": "tax deductible",
+   "ru": "уменьшает налоговую базу",
+   "ro": "deductibil fiscal",
+   "ex": "Training costs are tax deductible."
+  },
+  {
+   "w": "VAT",
+   "ru": "НДС",
+   "ro": "TVA",
+   "ex": "Prices are shown without VAT."
+  },
+  {
+   "w": "purchase order",
+   "ru": "заказ на поставку",
+   "ro": "comandă de achiziție",
+   "ex": "We can't deliver without a purchase order."
+  },
+  {
+   "w": "delivery note",
+   "ru": "накладная",
+   "ro": "aviz de însoțire",
+   "ex": "Sign the delivery note when the goods arrive."
+  },
+  {
+   "w": "receipt",
+   "ru": "квитанция, чек",
+   "ro": "chitanță, bon",
+   "ex": "Keep the receipt for the warranty."
+  },
+  {
+   "w": "refund",
+   "ru": "возврат денег",
+   "ro": "rambursare",
+   "ex": "The customer asked for a full refund."
+  },
+  {
+   "w": "reimburse",
+   "ru": "возместить расходы",
+   "ro": "a rambursa",
+   "ex": "The company will reimburse your travel costs."
+  },
+  {
+   "w": "valid until",
+   "ru": "действительно до",
+   "ro": "valabil până la",
+   "ex": "This offer is valid until the end of the month."
+  },
+  {
+   "w": "lump sum",
+   "ru": "единовременная сумма",
+   "ro": "sumă forfetară",
+   "ex": "They paid the whole amount as a lump sum."
+  },
+  {
+   "w": "fixed price",
+   "ru": "фиксированная цена",
+   "ro": "preț fix",
+   "ex": "We agreed on a fixed price for the whole job."
+  },
+  {
+   "w": "price increase",
+   "ru": "повышение цены",
+   "ro": "creștere de preț",
+   "ex": "The supplier announced a price increase from January."
+  },
+  {
+   "w": "negotiable",
+   "ru": "обсуждаемый, договорной",
+   "ro": "negociabil",
+   "ex": "The delivery date is negotiable."
+  },
+  {
+   "w": "binding",
+   "ru": "обязывающий, имеющий силу",
+   "ro": "obligatoriu",
+   "ex": "The offer is binding for 30 days."
+  },
+  {
+   "w": "signatory",
+   "ru": "подписант",
+   "ro": "semnatar",
+   "ex": "Only authorized signatories can sign the contract."
+  },
+  {
+   "w": "stamp",
+   "ru": "печать, штамп",
+   "ro": "ștampilă",
+   "ex": "The document needs a signature and a stamp."
+  },
+  {
+   "w": "notary",
+   "ru": "нотариус",
+   "ro": "notar",
+   "ex": "We signed the papers at the notary."
+  },
+  {
+   "w": "power of attorney",
+   "ru": "доверенность",
+   "ro": "procură",
+   "ex": "She signed with a power of attorney from the director."
+  },
+  {
+   "w": "due date",
+   "ru": "срок оплаты",
+   "ro": "dată scadentă",
+   "ex": "The due date for this invoice is May 15."
+  },
+  {
+   "w": "late fee",
+   "ru": "пеня за просрочку",
+   "ro": "penalitate de întârziere",
+   "ex": "A late fee applies after the due date."
+  },
+  {
+   "w": "bank transfer",
+   "ru": "банковский перевод",
+   "ro": "transfer bancar",
+   "ex": "We paid by bank transfer this morning."
+  },
+  {
+   "w": "in writing",
+   "ru": "в письменном виде",
+   "ro": "în scris",
+   "ex": "Please send all changes in writing."
+  },
+  {
+   "w": "dispute",
+   "ru": "спор, разногласие",
+   "ro": "dispută, litigiu",
+   "ex": "The dispute was settled without going to court."
+  },
+  {
+   "w": "settle",
+   "ru": "урегулировать, оплатить (счёт)",
+   "ro": "a soluționa, a achita",
+   "ex": "We settled the invoice last week."
+  }
+ ]
+}

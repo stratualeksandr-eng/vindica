@@ -7,6 +7,8 @@ name: Сборка приложений
 on:
   push:
     branches: [main, master]
+    # new word blocks for «Английский» (en/) are downloaded by the app itself: no new build for them
+    paths-ignore: ['en/**']
   workflow_dispatch:
     inputs:
       mac:
