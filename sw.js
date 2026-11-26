@@ -1,5 +1,5 @@
-/* «Верни себя себе»: работа без сети. Сборка 69a442a38b9c */
-const V = 'vindica-69a442a38b9c';
+/* «Верни себя себе»: работа без сети. Сборка c30da90b94b5 */
+const V = 'vindica-c30da90b94b5';
 const CORE = ["./", "index.html", "manifest.webmanifest", "apple-touch-icon.png", "icon-192.png", "icon-512.png", "maskable-512.png", "sc-idea.png", "sc-idea-mask.png", "sc-morning.png", "sc-evening.png", "sc-voice.png"];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(V).then(c => c.addAll(CORE.map(u => new Request(u, { cache: 'reload' })))).then(() => self.skipWaiting()));
