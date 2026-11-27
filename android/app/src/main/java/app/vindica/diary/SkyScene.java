@@ -177,12 +177,14 @@ final class SkyScene {
         if (st > .01) {
             float sc = Math.max(w / 400f, h / 900f), ox = (w - 400 * sc) / 2, oy = (h - 900 * sc) / 2;
             int star = HeroMath.hex("#FFF3DA");
+            Paint g = new Paint(Paint.ANTI_ALIAS_FLAG);
             for (double[] s : HeroMath.stars()) {
-                float x = (float) (ox + s[0] * sc), y = (float) (oy + s[1] * sc), r = (float) (s[2] * sc);
-                p.setColor(HeroMath.alpha(star, s[3] * st * .2));
-                c.drawCircle(x, y, r * 2.4f, p);
+                float x = (float) (ox + s[0] * sc), y = (float) (oy + s[1] * sc), r = (float) (s[2] * sc) * .8f;
+                /* a soft glow fading out, then the point of light */
+                g.setShader(new RadialGradient(x, y, r * 3.2f, new int[]{HeroMath.alpha(star, s[3] * st * .38), HeroMath.alpha(star, 0)}, null, Shader.TileMode.CLAMP));
+                c.drawCircle(x, y, r * 3.2f, g);
                 p.setColor(HeroMath.alpha(star, s[3] * st));
-                c.drawCircle(x, y, r * .9f, p);
+                c.drawCircle(x, y, r, p);
             }
         }
         HeroMath.Body sun = HeroMath.sunSky(now, z, dark);
@@ -200,7 +202,7 @@ final class SkyScene {
         }
         HeroMath.Body moon = HeroMath.moonSky(now, z, dark);
         double mo = moon.o * (1 - .85 * cv);
-        if (mo > .02) {
+        if (mo > .25) {
             int px = Math.max(8, Math.round(38 * u));
             Bitmap m = HeroDraw.moon(px, moon.phase, dark);
             Paint q = new Paint(Paint.FILTER_BITMAP_FLAG);
