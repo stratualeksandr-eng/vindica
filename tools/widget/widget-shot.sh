@@ -17,6 +17,8 @@ log boot
 t 180 adb install -r -g $APK
 t 30 adb shell appwidget grantbind --package $A --user 0
 t 20 adb shell settings put global auto_time 0
+# no «isn't responding» dialogs over the shots (the launcher on Android 14 is slow at boot)
+t 20 adb shell settings put global hide_error_dialogs 1
 t 20 adb shell settings put global auto_time_zone 0
 t 30 adb root
 sleep 5

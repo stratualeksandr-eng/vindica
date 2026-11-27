@@ -297,13 +297,15 @@ final class HeroPlace {
             }
         }
         if (best != null && System.currentTimeMillis() - best.getTime() < 10 * 60000L) return best;
-        String pr = null;
-        for (String c : new String[]{"fused", LocationManager.NETWORK_PROVIDER, LocationManager.GPS_PROVIDER, LocationManager.PASSIVE_PROVIDER})
-            if (prs.contains(c)) {
-                pr = c;
-                break;
-            }
-        if (pr == null) return best;
+        /* a fresh fix: the phone's own fused one, else the network's, then satellites as a last resort */
+        String first = prs.contains("fused") ? "fused" : prs.contains(LocationManager.NETWORK_PROVIDER) ? LocationManager.NETWORK_PROVIDER : null;
+        Location got = first == null ? null : current(ctx, lm, first, 25);
+        if (got == null && prs.contains(LocationManager.GPS_PROVIDER)) got = current(ctx, lm, LocationManager.GPS_PROVIDER, 20);
+        return got != null ? got : best;
+    }
+
+    @SuppressWarnings("deprecation")
+    private static Location current(Context ctx, LocationManager lm, String pr, int sec) throws InterruptedException {
         final Location[] got = {null};
         final CountDownLatch cd = new CountDownLatch(1);
         try {
@@ -313,7 +315,7 @@ final class HeroPlace {
                     got[0] = l;
                     cd.countDown();
                 });
-                if (!cd.await(25, TimeUnit.SECONDS)) cs.cancel();
+                if (!cd.await(sec, TimeUnit.SECONDS)) cs.cancel();
             } else {
                 LocationListener li = new LocationListener() {
                     @Override
@@ -323,7 +325,6 @@ final class HeroPlace {
                     }
 
                     @Override
-                    @SuppressWarnings("deprecation")
                     public void onStatusChanged(String provider, int status, Bundle extras) {}
 
                     @Override
@@ -333,12 +334,12 @@ final class HeroPlace {
                     public void onProviderDisabled(String provider) {}
                 };
                 lm.requestSingleUpdate(pr, li, Looper.getMainLooper());
-                if (!cd.await(25, TimeUnit.SECONDS)) lm.removeUpdates(li);
+                if (!cd.await(sec, TimeUnit.SECONDS)) lm.removeUpdates(li);
             }
         } catch (SecurityException | IllegalArgumentException e) {
             /* the phone said no */
         }
-        return got[0] != null ? got[0] : best;
+        return got[0];
     }
 
     private static boolean store(Context ctx, Location l, String lang) throws Exception {
