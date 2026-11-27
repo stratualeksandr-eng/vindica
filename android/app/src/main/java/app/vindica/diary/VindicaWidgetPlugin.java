@@ -18,7 +18,8 @@ import org.json.JSONException;
 /* the page and the home-screen widgets: the shopping list goes to «Покупки», marks made there come back;
    the days ahead go to «Сегодня» and «Часы»; where the phone is goes to the sky, the weather and the skyline */
 @CapacitorPlugin(name = "VindicaWidget", permissions = {
-    @Permission(alias = "location", strings = {android.Manifest.permission.ACCESS_COARSE_LOCATION})
+    @Permission(alias = "location", strings = {android.Manifest.permission.ACCESS_COARSE_LOCATION}),
+    @Permission(alias = "always", strings = {android.Manifest.permission.ACCESS_BACKGROUND_LOCATION})
 })
 public class VindicaWidgetPlugin extends Plugin {
     private SharedPreferences prefs() {
@@ -114,9 +115,44 @@ public class VindicaWidgetPlugin extends Plugin {
             r.put("name", p.name);
             r.put("at", p.at);
         }
-        PermissionState s = getPermissionState("location");
-        r.put("perm", s == PermissionState.GRANTED ? "granted" : s == PermissionState.DENIED ? "denied" : "prompt");
+        r.put("perm", word(getPermissionState("location")));
+        r.put("always", always());
         return r;
+    }
+
+    private static String word(PermissionState s) {
+        return s == PermissionState.GRANTED ? "granted" : s == PermissionState.DENIED ? "denied" : "prompt";
+    }
+
+    /* may the wallpaper look where the phone is while the app is closed? (before Android 10 the one permission is enough) */
+    private String always() {
+        if (getPermissionState("location") != PermissionState.GRANTED) return "prompt";
+        if (android.os.Build.VERSION.SDK_INT < 29) return "granted";
+        return word(getPermissionState("always"));
+    }
+
+    /* the wallpaper finds the town by itself: first the place while in use, then «always» (Android shows its own page) */
+    @PluginMethod
+    public void allowAlways(PluginCall call) {
+        if (getPermissionState("location") != PermissionState.GRANTED) {
+            requestPermissionForAlias("location", call, "alwaysFirst");
+            return;
+        }
+        alwaysFirst(call);
+    }
+
+    @PermissionCallback
+    private void alwaysFirst(PluginCall call) {
+        if (getPermissionState("location") != PermissionState.GRANTED || android.os.Build.VERSION.SDK_INT < 29 || "granted".equals(always())) {
+            call.resolve(place());
+            return;
+        }
+        requestPermissionForAlias("always", call, "alwaysDone");
+    }
+
+    @PermissionCallback
+    private void alwaysDone(PluginCall call) {
+        call.resolve(place());
     }
 
     /* looks where the phone is: asks for the permission first when ask is set (the first time, or from the settings),

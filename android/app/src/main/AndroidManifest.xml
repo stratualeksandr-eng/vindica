@@ -106,6 +106,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- where the phone is, roughly: the sky, the weather and the town on the horizon follow it -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- only when asked from the settings: the live wallpaper finds the town by itself while the app is closed -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <!-- Напоминания из «Плана» точно в назначенное время, даже когда приложение закрыто -->
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.VIBRATE" />

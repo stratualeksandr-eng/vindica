@@ -231,7 +231,7 @@ final class SkyScene {
         HeroPlace.Art art = HeroPlace.art(ctx);
         landCity = HeroPlace.city(ctx);
         landBase = mzTopOf(h);
-        landK = Math.min(w / 860f, h * .26f / 432f);
+        landK = Math.min(w / 940f, h * .24f / 432f);
         landC2 = c2;
         landNight = HeroMath.cl((-3 - alt) / 5, 0, 1);
         if (art == null) return;
@@ -418,10 +418,10 @@ final class SkyScene {
         if (low) {
             /* the landmark keeps its sky: the dial and the life total stay above it (above its roofs if need be),
                the motto lies over the roofs */
-            float top = landBase - (420 - lc.top) * landK, clr = landBase - (420 - lc.clear) * landK;
+            float top = landBase - (420 - lc.top) * landK, clr = landBase - (420 - lc.clear) * landK, least = 170 * u * .86f;
             room = top - gap - y - (lv != null ? lv.h + gap : 0);
-            if (room < minDial * .86f) room = clr - gap - y - (lv != null ? lv.h + gap : 0);
-            if (room < minDial * .86f) low = false;
+            if (room < least) room = clr - gap - y - (lv != null ? lv.h + gap : 0);
+            if (room < least) low = false;
         }
         boolean mottoOn = true;
         if (!low) {

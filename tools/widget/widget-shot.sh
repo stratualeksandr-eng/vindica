@@ -66,6 +66,17 @@ sky --es fixture hero-ru.json --es place "45.35,25.55,Sinaia" --es wx "71,-2,0.6
 shot 14-sky-elsewhere 8
 sky --ez noplace true --es fixture hero-ru.json --es wx "45,1,0.8"
 shot 15-sky-noplace 6
+# the phone is in Buzău (a mock fix): the app's own look finds it, in the foreground
+settime 112721302026.00
+t 20 adb shell settings put secure location_mode 3
+t 20 adb emu geo fix 26.8167 45.1517
+sleep 3
+t 20 adb emu geo fix 26.8167 45.1517
+sky --ez noplace true --es fixture hero-ru.json --ez locate true
+shot 16-sky-locate 25
+t 30 adb shell run-as $A cat shared_prefs/vindica_widget.xml > $OUT/prefs-locate.xml
+sky --ez noplace true --es fixture hero-ru.json --es wx "45,1,0.8"
+sleep 3
 t 60 adb logcat -d > $OUT/logcat-a-full.txt
 grep -iE "vindica|AndroidRuntime|Wallpaper|FATAL" $OUT/logcat-a-full.txt | tail -300 > $OUT/logcat-a.txt
 
@@ -74,10 +85,12 @@ grep -iE "vindica|AndroidRuntime|Wallpaper|FATAL" $OUT/logcat-a-full.txt | tail 
 settime 112721302026.00
 t 20 adb shell am force-stop $A
 t 20 adb shell pm grant $A android.permission.ACCESS_COARSE_LOCATION
-t 20 adb shell settings put secure location_mode 3
+t 20 adb shell pm grant $A android.permission.ACCESS_BACKGROUND_LOCATION
 t 20 adb emu geo fix 26.8167 45.1517
+# the launcher's «isn't responding» from boot covers the screen on Android 14: wait it away
+tapon "^wait$|подождать"
+t 20 adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS
 sleep 2
-t 20 adb emu geo fix 26.8167 45.1517
 t 30 adb shell am start -a android.service.wallpaper.CHANGE_LIVE_WALLPAPER --ecn android.service.wallpaper.extra.LIVE_WALLPAPER_COMPONENT $A/$A.SkyWallpaper
 shot 9-preview 10
 tapon "set wallpaper|set|apply|установить"

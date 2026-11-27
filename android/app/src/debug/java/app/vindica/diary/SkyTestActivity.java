@@ -18,7 +18,8 @@ import java.io.InputStream;
 /* Debug builds only: the live wallpaper's picture full screen, drawn by the same SkyScene, for emulator shots.
    Extras: fixture (the page's data, a file in the app's files), flip (the dial turned over), unit (0 years, 1 weeks,
    2 hours), wx (a weather answer to use instead of asking Open-Meteo: "code,temperature,cover"), place (where the
-   phone is: "lat,lon,name"), noplace (forget the place: back to Brașov on a Romanian clock). */
+   phone is: "lat,lon,name"), noplace (forget the place: back to Brașov on a Romanian clock), locate (look where the
+   phone is, as the app does). */
 public class SkyTestActivity extends Activity {
     private final SkyScene scene = new SkyScene();
 
@@ -72,6 +73,11 @@ public class SkyTestActivity extends Activity {
         } else {
             HeroWeather.refresh(this, true, null);
         }
+        /* locate: look where the phone is now, as the app does in the foreground */
+        if (in.getBooleanExtra("locate", false)) HeroPlace.refresh(this, true, "ru", changed -> runOnUiThread(() -> {
+            scene.invalidate();
+            HeroWeather.refresh(this, true, null);
+        }));
         scene.flipped = in.getBooleanExtra("flip", false);
         scene.unit = in.getIntExtra("unit", 0);
         setContentView(new Sky(this));
