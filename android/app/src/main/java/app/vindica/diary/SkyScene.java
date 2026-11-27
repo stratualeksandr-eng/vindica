@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.LinearGradient;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PathMeasure;
@@ -28,8 +30,9 @@ import java.util.TimeZone;
 
 /* The live wallpaper's picture: the sky of «Сегодня» full screen with everything the first page counts. The date and
    day of life, the greeting, Memento mori with TEMPVS NOSTRVM and PROTINVS VIVE, the hour and the weather, the sundial
-   (its back counts down to lights out), what is left of a life to eighty, Seneca and the meander. The still parts are
-   drawn once a minute into one picture; the counters, and the back of the dial when it is turned, every second. */
+   (its back counts down to lights out), what is left of a life to eighty, Seneca and the meander, and under the sky
+   the town where the phone is, its landmark standing on the meander. The still parts are drawn once a minute into
+   one picture; the counters, and the back of the dial when it is turned, every second. */
 final class SkyScene {
     /* the sundial shows its back, the countdown to lights out */
     boolean flipped;
@@ -45,6 +48,11 @@ final class SkyScene {
     private float u, colR, tnY, slY, wkY, dialL, dialT, dialS;
     private boolean dark, day;
     private HeroMath.Ink ink;
+    /* the skyline as last drawn: its scale, its base line, its town, the sky's lowest colour and the night's depth */
+    private float landK, landBase;
+    private HeroPlace.City landCity;
+    private int landC2;
+    private double landNight;
 
     private static final int[] ON = {HeroMath.hex("#191C24"), HeroMath.hex("#1F2229"), HeroMath.hex("#292625")},
         LO = {HeroMath.hex("#D9DDE0"), HeroMath.hex("#E2E5E7"), HeroMath.hex("#EBECED")};
@@ -135,6 +143,7 @@ final class SkyScene {
 
     void draw(Context ctx, Canvas c, int w, int h, long now) {
         fonts(ctx);
+        HeroPlace.load(ctx);
         HeroData d = HeroData.load(ctx);
         TimeZone z = TimeZone.getDefault();
         day = HeroMath.isDay(now, z);
@@ -145,7 +154,7 @@ final class SkyScene {
         String lang = d.str("lang", Locale.getDefault().getLanguage());
         String wx = HeroWeather.text(ctx, lang, now);
         double cover = HeroWeather.cover(ctx, now);
-        String key = w + "x" + h + "|" + (now / 60000) + "|" + dark + "|" + day + "|" + flipped + "|" + unit + "|" + System.identityHashCode(d) + "|" + wx + "|" + cover;
+        String key = w + "x" + h + "|" + (now / 60000) + "|" + dark + "|" + day + "|" + flipped + "|" + unit + "|" + System.identityHashCode(d) + "|" + wx + "|" + cover + "|" + HeroPlace.key(ctx);
         if (base == null || base.getWidth() != w || base.getHeight() != h) {
             base = Bitmap.createBitmap(Math.max(1, w), Math.max(1, h), Bitmap.Config.ARGB_8888);
             baseKey = "";
@@ -209,6 +218,72 @@ final class SkyScene {
             q.setAlpha((int) Math.round(HeroMath.cl(mo, 0, 1) * 255));
             c.drawBitmap(m, (float) (moon.x / 100 * w - px / 2.0), (float) (moon.y / 100 * h - px / 2.0), q);
         }
+        land(ctx, c, w, h, col[2], HeroMath.sunAlt(HeroMath.sunPos(now, z)));
+    }
+
+    private float mzTopOf(int h) {
+        return h - Math.max(20 * u, h * .022f) - 12 * u;
+    }
+
+    /* the town under the sky: its silhouette stands on the meander in the sky's own colours, the sun and the moon go
+       down behind it; elsewhere soft hills. The same drawing and the same colours as the page */
+    private void land(Context ctx, Canvas c, int w, int h, int c2, double alt) {
+        HeroPlace.Art art = HeroPlace.art(ctx);
+        landCity = HeroPlace.city(ctx);
+        landBase = mzTopOf(h);
+        landK = Math.min(w / 940f, h * .24f / 432f);
+        landC2 = c2;
+        landNight = HeroMath.cl((-3 - alt) / 5, 0, 1);
+        if (art == null) return;
+        Matrix m = new Matrix();
+        m.setScale(landK, landK);
+        m.postTranslate(w / 2f - 500 * landK, landBase - 420 * landK);
+        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+        Path q = new Path();
+        for (int i = 0; i < art.paths.size(); i++) {
+            int col = tone(art.tones.get(i));
+            if (Color.alpha(col) == 0) continue;
+            p.setColor(col);
+            art.paths.get(i).transform(m, q);
+            c.drawPath(q, p);
+        }
+        p.setColor(tone(art.hasNear ? "near" : "mid"));
+        c.drawRect(0, landBase + 10 * landK, w, h, p);
+    }
+
+    private int tone(String t) {
+        int c2 = landC2, K = 0xFF000000;
+        double nk = landNight;
+        if (dark) {
+            switch (t) {
+                case "far": return HeroMath.mix(c2, K, .32);
+                case "mid": return HeroMath.mix(c2, K, .52);
+                case "near": return HeroMath.mix(c2, K, .7);
+                case "det": return HeroMath.mix(c2, K, .55);
+                case "hero": return HeroMath.mix(HeroMath.mix(c2, K, .62), HeroMath.hex("#8C97A8"), nk);
+                case "lit": return HeroMath.alpha(HeroMath.hex("#F6ECD6"), .7 + .25 * nk);
+                case "win": return HeroMath.alpha(HeroMath.hex("#F2C46B"), .85 * nk);
+                default: return 0;
+            }
+        }
+        switch (t) {
+            case "far": return HeroMath.mix(c2, HeroMath.hex("#5E7186"), .24);
+            case "mid": return HeroMath.mix(c2, HeroMath.hex("#46566A"), .4);
+            case "near": return HeroMath.mix(c2, HeroMath.hex("#353F4C"), .52);
+            case "det": return HeroMath.mix(c2, HeroMath.hex("#46566A"), .44);
+            case "hero": return HeroMath.mix(c2, HeroMath.hex("#2A323C"), .7);
+            case "lit": return HeroMath.alpha(0xFFFFFFFF, .96);
+            default: return 0;
+        }
+    }
+
+    /* a soft halo under words that lie over the town: dark by night, the sky's own light by day */
+    private int halo() {
+        return dark ? HeroMath.alpha(0xFF000000, .55) : HeroMath.mix(landC2, 0xFFFFFFFF, .35);
+    }
+
+    private static String low1(String s) {
+        return s.isEmpty() ? s : s.substring(0, 1).toLowerCase(Locale.ROOT) + s.substring(1);
     }
 
     private static String cur(HeroData d, String key, long now, int i) {
@@ -310,7 +385,8 @@ final class SkyScene {
 
         /* the hour: the night watch or the sun's own time, and the weather after it */
         String hour = cur(d, "hour", now, 1).replace("{S}", HeroMath.fmtM(HeroMath.sunPos(now, z).tst));
-        if (!wx.isEmpty()) hour = (hour.isEmpty() ? "" : hour + " ") + wx + ".";
+        String town = HeroPlace.name(ctx, lang), wl = wx.isEmpty() ? town : town.isEmpty() ? wx : town + ": " + low1(wx);
+        if (!wl.isEmpty()) hour = (hour.isEmpty() ? "" : hour + " ") + wl + ".";
         rHour.setEmpty();
         if (!hour.isEmpty()) {
             StaticLayout hl = lay(hour, tp(lit, 15 * u, k.mut, 0), (int) cw, Layout.Alignment.ALIGN_NORMAL, 1.15f, 3);
@@ -323,7 +399,7 @@ final class SkyScene {
         }
 
         /* below: the life left, Seneca, the meander; the dial takes the room in between */
-        float mzTop = h - Math.max(20 * u, h * .022f) - 12 * u;
+        float mzTop = mzTopOf(h);
         JSONObject life = d.has() ? d.o.optJSONObject("life") : null;
         JSONObject lab = d.has() ? d.o.optJSONObject("lab") : null;
         JSONArray motto = d.has() ? d.o.optJSONArray("motto") : null;
@@ -336,15 +412,28 @@ final class SkyScene {
 
         Life lv = life == null ? null : new Life(life, lab, cw, k);
         float gap = 14 * u, minDial = 190 * u;
-        float room = mzTop - gap - y - (lv != null ? lv.h + gap : 0) - mottoH - gap;
-        boolean mottoOn = true;
-        if (room < minDial * .86f) {
-            mottoOn = false;
-            room += mottoH + gap;
+        HeroPlace.City lc = landCity;
+        boolean low = lc != null && lc.clear > 0;
+        float room = 0;
+        if (low) {
+            /* the landmark keeps its sky: the dial and the life total stay above it (above its roofs if need be),
+               the motto lies over the roofs */
+            float top = landBase - (420 - lc.top) * landK, clr = landBase - (420 - lc.clear) * landK, least = 170 * u * .86f;
+            room = top - gap - y - (lv != null ? lv.h + gap : 0);
+            if (room < least) room = clr - gap - y - (lv != null ? lv.h + gap : 0);
+            if (room < least) low = false;
         }
-        if (room < minDial * .86f && lv != null) {
-            room += lv.h + gap;
-            lv = null;
+        boolean mottoOn = true;
+        if (!low) {
+            room = mzTop - gap - y - (lv != null ? lv.h + gap : 0) - mottoH - gap;
+            if (room < minDial * .86f) {
+                mottoOn = false;
+                room += mottoH + gap;
+            }
+            if (room < minDial * .86f && lv != null) {
+                room += lv.h + gap;
+                lv = null;
+            }
         }
         float dw = Math.max(120 * u, Math.min(Math.min(340 * u, cw), room / .86f)), dh = dw * .86f;
         dialL = (w - dw) / 2;
@@ -366,9 +455,11 @@ final class SkyScene {
             rLife.set(x0, y0 - 6 * u, x1, y - gap + 6 * u);
         }
 
-        /* Seneca */
+        /* Seneca: after the life total, or over the roofs of the town, with a halo under the words */
         if (mottoOn) {
-            float b = y + 13 * u;
+            float b = low ? mzTop - gap - mottoH + 13 * u : y + 13 * u;
+            mp.setShadowLayer(5 * u, 0, 0, halo());
+            ip.setShadowLayer(5 * u, 0, 0, halo());
             c.drawText(la1, w / 2f, b, mp);
             c.drawText(la2, w / 2f, b + 13 * u * 1.35f, mp);
             c.save();

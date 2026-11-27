@@ -10,11 +10,11 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Locale;
-import java.util.TimeZone;
 
-/* The weather for the live wallpaper: Open-Meteo for the place the sundial stands (Brașov on a Romanian clock),
-   asked again every half hour while the wallpaper is in view, kept in vindica_widget. Shown as the page shows its
-   weather, «Пасмурно, +3°», after the hour; cloud cover also greys the sky and hides the stars. */
+/* The weather for the live wallpaper: Open-Meteo for where the phone is (HeroPlace; Brașov on a Romanian clock
+   until it is known), asked again every half hour while the wallpaper is in view and whenever the place changes,
+   kept in vindica_widget. Shown as the page shows its weather, «Брашов: пасмурно, +3°», after the hour; cloud cover
+   also greys the sky and hides the stars. */
 final class HeroWeather {
     static final String KEY = "hero.wx";
     private static final long FRESH = 30 * 60000L, OLD = 3 * 3600000L;
@@ -27,7 +27,7 @@ final class HeroWeather {
 
     static final class Now {
         long at;
-        double t, cover, wind;
+        double t, cover, wind, lat = Double.NaN, lon = Double.NaN;
         int code;
     }
 
@@ -46,6 +46,8 @@ final class HeroWeather {
             n.code = o.optInt("code", 0);
             n.cover = o.optDouble("cover", 0);
             n.wind = o.optDouble("wind", 0);
+            n.lat = o.optDouble("lat", Double.NaN);
+            n.lon = o.optDouble("lon", Double.NaN);
             lastN = n;
             return n;
         } catch (Exception e) {
@@ -53,9 +55,16 @@ final class HeroWeather {
         }
     }
 
+    /* is the last answer for this place? (the weather of a town left behind is not shown) */
+    private static boolean here(Context ctx, Now n) {
+        double[] w = HeroPlace.where(ctx);
+        if (w == null) return false;
+        return Double.isNaN(n.lat) ? !HeroPlace.has : HeroPlace.km(n.lat, n.lon, w[0], w[1]) < 8;
+    }
+
     static boolean stale(Context ctx, long now) {
         Now n = get(ctx);
-        return n == null || now - n.at > FRESH;
+        return n == null || now - n.at > FRESH || !here(ctx, n);
     }
 
     /* asks again when the last answer is older than half an hour (after a failure not sooner than in five minutes),
@@ -80,9 +89,10 @@ final class HeroWeather {
 
     private static void fetch(Context ctx) throws Exception {
         long now = System.currentTimeMillis();
-        HeroMath.Sun p = HeroMath.sunPos(now, TimeZone.getDefault());
+        double[] w = HeroPlace.where(ctx);
+        if (w == null) return;
         String url = String.format(Locale.US, "https://api.open-meteo.com/v1/forecast?latitude=%.3f&longitude=%.3f"
-            + "&current=temperature_2m,weather_code,cloud_cover,wind_speed_10m&wind_speed_unit=ms&timezone=auto", p.lat, p.lon);
+            + "&current=temperature_2m,weather_code,cloud_cover,wind_speed_10m&wind_speed_unit=ms&timezone=auto", w[0], w[1]);
         HttpURLConnection c = (HttpURLConnection) new URL(url).openConnection();
         c.setConnectTimeout(10000);
         c.setReadTimeout(10000);
@@ -99,23 +109,25 @@ final class HeroWeather {
             o.put("code", cur.optInt("weather_code", 0));
             o.put("cover", Math.max(0, Math.min(1, cur.optDouble("cloud_cover", 0) / 100)));
             o.put("wind", cur.optDouble("wind_speed_10m", 0));
+            o.put("lat", w[0]);
+            o.put("lon", w[1]);
             ctx.getSharedPreferences(ShopWidget.PREFS, Context.MODE_PRIVATE).edit().putString(KEY, o.toString()).apply();
         } finally {
             c.disconnect();
         }
     }
 
-    /* «Пасмурно, +3°», or nothing when the last answer is more than three hours old */
+    /* «Пасмурно, +3°», or nothing when the last answer is more than three hours old or for another place */
     static String text(Context ctx, String lang, long now) {
         Now n = get(ctx);
-        if (n == null || now - n.at > OLD) return "";
+        if (n == null || now - n.at > OLD || !here(ctx, n)) return "";
         long t = Math.round(n.t);
         return phrase(n.code, "ro".equals(lang)) + ", " + (t > 0 ? "+" : t < 0 ? "−" : "") + Math.abs(t) + "°";
     }
 
     static double cover(Context ctx, long now) {
         Now n = get(ctx);
-        return n == null || now - n.at > OLD ? 0 : n.cover;
+        return n == null || now - n.at > OLD || !here(ctx, n) ? 0 : n.cover;
     }
 
     /* the WMO weather codes, in words */

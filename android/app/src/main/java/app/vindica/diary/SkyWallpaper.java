@@ -3,6 +3,7 @@ package app.vindica.diary;
 import android.annotation.TargetApi;
 import android.app.WallpaperColors;
 import android.app.WallpaperManager;
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -105,10 +106,18 @@ public class SkyWallpaper extends WallpaperService {
             }
         }
 
+        /* where the phone is (when allowed, at most every quarter of an hour), then the weather there */
         private void weather(boolean force) {
-            HeroWeather.refresh(getApplicationContext(), force, () -> h.post(() -> {
-                scene.invalidate();
-                frame();
+            final Context app = getApplicationContext();
+            HeroPlace.refresh(app, false, HeroData.load(app).str("lang", ""), changed -> h.post(() -> {
+                if (changed) {
+                    scene.invalidate();
+                    frame();
+                }
+                HeroWeather.refresh(app, force || changed, () -> h.post(() -> {
+                    scene.invalidate();
+                    frame();
+                }));
             }));
         }
 

@@ -20,15 +20,16 @@ final class HeroMath {
         double tz, lat, lon, eq, de, tst, H;
     }
 
-    /* the sun for this moment and place: Brașov when the clock is Romanian, else the middle of the time zone */
+    /* the sun for this moment and place: where the phone is (HeroPlace), else Brașov when the clock is Romanian,
+       else the middle of the time zone */
     static Sun sunPos(long now, TimeZone zone) {
         Calendar c = Calendar.getInstance(zone);
         c.setTimeInMillis(now);
         Sun p = new Sun();
         p.tz = zone.getOffset(now) / 3600000.0;
         boolean ro = p.tz == 2 || p.tz == 3;
-        p.lat = ro ? 45.65 : 45;
-        p.lon = ro ? 25.6 : p.tz * 15;
+        p.lat = HeroPlace.has ? HeroPlace.lat : ro ? 45.65 : 45;
+        p.lon = HeroPlace.has ? HeroPlace.lon : ro ? 25.6 : p.tz * 15;
         Calendar y0 = Calendar.getInstance(zone);
         y0.clear();
         y0.set(c.get(Calendar.YEAR), Calendar.JANUARY, 0, 0, 0, 0);
