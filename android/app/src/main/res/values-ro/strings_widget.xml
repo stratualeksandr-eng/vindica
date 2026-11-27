@@ -17,4 +17,7 @@
         <item>Bună ziua</item>
         <item>Bună seara</item>
     </string-array>
+    <string name="sky_name">Cerul «Revendică-te ție însuți»</string>
+    <string name="sky_desc">Cerul aplicației: soarele și luna la locul lor, cadranul solar, toate numărătorile vieții și vremea</string>
+    <string name="sky_author">Revendică-te ție însuți</string>
 </resources>

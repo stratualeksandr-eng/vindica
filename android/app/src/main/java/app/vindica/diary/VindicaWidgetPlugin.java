@@ -49,6 +49,35 @@ public class VindicaWidgetPlugin extends Plugin {
         call.resolve();
     }
 
+    /* the live wallpaper: the phone's own preview of it, with its button to set it; else the list of live wallpapers */
+    @PluginMethod
+    public void openWallpaper(PluginCall call) {
+        android.app.Activity a = getActivity();
+        if (a == null) {
+            JSObject r = new JSObject();
+            r.put("ok", false);
+            call.resolve(r);
+            return;
+        }
+        a.runOnUiThread(() -> {
+            boolean ok = true;
+            try {
+                android.content.Intent i = new android.content.Intent(android.app.WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
+                i.putExtra(android.app.WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, new android.content.ComponentName(a, SkyWallpaper.class));
+                a.startActivity(i);
+            } catch (Exception e) {
+                try {
+                    a.startActivity(new android.content.Intent(android.app.WallpaperManager.ACTION_LIVE_WALLPAPER_CHOOSER));
+                } catch (Exception e2) {
+                    ok = false;
+                }
+            }
+            JSObject r = new JSObject();
+            r.put("ok", ok);
+            call.resolve(r);
+        });
+    }
+
     @PluginMethod
     public void takeChecked(PluginCall call) {
         SharedPreferences sp = prefs();
