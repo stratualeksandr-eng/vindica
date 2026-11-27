@@ -389,7 +389,12 @@ final class SkyScene {
             mottoOn = false;
             room += mottoH + gap;
         }
-        if (room < minDial * .86f && card != null) {
+        if (room < minDial * .86f && lv != null && lv.capOn) {
+            float was = lv.h;
+            lv = new Life(life, lab, cw, k, false);
+            room += was - lv.h;
+        }
+        if (room < minDial * .86f && card != null && card.pic) {
             float was = card.h;
             card = new Card(ctx, lang, cw, false, k, now, z);
             room += was - card.h;
@@ -458,18 +463,20 @@ final class SkyScene {
         c.drawPath(p, mz);
     }
 
-    /* the card of the place: on the left the town and its landmarks by name, on the right the weather's sign, the
-       temperature and the weather in words; below, in a band of the sky's own colours, the landmark drawn large */
+    /* the card of the place: the town and its landmarks by name, the weather's sign, the temperature and the weather in
+       words; on the right, in a picture of the sky's own colours, the landmark itself. Without room (or without a
+       drawing of the town) the card keeps only its words, the weather then on the right */
     private final class Card {
-        final float w, head, band, h, rightW;
+        final float w, h, pw;
+        final boolean pic;
         final StaticLayout cityL, sightsL, phL;
         final String temp;
         final int icon;
         final TextPaint tpT;
         final HeroPlace.Art art;
-        final float[] focus;
+        final float[] box;
 
-        Card(Context ctx, String lang, float w, boolean withBand, HeroMath.Ink k, long now, TimeZone z) {
+        Card(Context ctx, String lang, float w, boolean withPic, HeroMath.Ink k, long now, TimeZone z) {
             this.w = w;
             boolean ro = "ro".equals(lang), night = HeroMath.sunAlt(HeroMath.sunPos(now, z)) < -.833;
             HeroWeather.Now n = HeroWeather.now(ctx, now);
@@ -483,24 +490,36 @@ final class SkyScene {
                 temp = "";
                 icon = -1;
             }
-            tpT = tp(forum, 36 * u, k.ink, 0);
-            tpT.setShadowLayer(0, 0, 0, 0);
-            float tw = temp.isEmpty() ? 0 : tpT.measureText(temp);
-            phL = ph.isEmpty() ? null : lay(ph, quiet(tp(lit, 13 * u, k.mut, 0)), (int) (128 * u), Layout.Alignment.ALIGN_OPPOSITE, 1.2f, 2);
-            float pw = 0;
-            if (phL != null) for (int i = 0; i < phL.getLineCount(); i++) pw = Math.max(pw, phL.getLineWidth(i));
-            rightW = icon < 0 && temp.isEmpty() ? 0 : 34 * u + 8 * u + Math.max(tw, pw);
-            float lw = w - 32 * u - rightW - (rightW > 0 ? 10 * u : 0);
-            String town = HeroPlace.name(ctx, lang), sights = HeroPlace.sights(ctx, lang);
-            cityL = lay(town, quiet(tp(forum, 30 * u, k.ink, 0)), (int) lw, Layout.Alignment.ALIGN_NORMAL, 1.05f, 1);
-            sightsL = sights.isEmpty() ? null : lay(sights.toUpperCase(Locale.forLanguageTag(ro ? "ro" : "ru")), quiet(tp(forum, 11 * u, k.brz, .15f)), (int) lw, Layout.Alignment.ALIGN_NORMAL, 1.25f, 2);
-            float lh = cityL.getHeight() + (sightsL != null ? 6 * u + sightsL.getHeight() : 0);
-            float rh = Math.max(icon >= 0 ? 34 * u : 0, tempH() + (phL != null ? 3 * u + phL.getHeight() : 0));
-            head = 14 * u + Math.max(lh, rh) + 12 * u;
-            band = withBand ? 100 * u : 0;
-            h = head + band;
+            HeroPlace.City city = HeroPlace.city(ctx);
+            pic = withPic && city != null;
             art = HeroPlace.art(ctx);
-            focus = HeroPlace.focus(ctx);
+            box = HeroPlace.box(ctx);
+            pw = pic ? Math.round(w * .46f) : 0;
+            String town = HeroPlace.name(ctx, lang), sights = HeroPlace.sights(ctx, lang);
+            float tw = (pic ? w - pw - 28 * u : w - 32 * u);
+            tpT = quiet(tp(forum, (pic ? 28 : 34) * u, k.ink, 0));
+            float tempW = temp.isEmpty() ? 0 : tpT.measureText(temp), iconS = (pic ? 26 : 32) * u;
+            if (pic) {
+                /* words on the left: the town, the landmarks, then a row with the weather */
+                float rest = tw - (icon >= 0 ? iconS + 8 * u : 0) - (tempW > 0 ? tempW + 8 * u : 0);
+                phL = ph.isEmpty() ? null : lay(ph, quiet(tp(lit, 12.5f * u, k.mut, 0)), (int) Math.max(40 * u, rest), Layout.Alignment.ALIGN_NORMAL, 1.15f, 2);
+                cityL = lay(town, quiet(tp(forum, 27 * u, k.ink, 0)), (int) tw, Layout.Alignment.ALIGN_NORMAL, 1.05f, 1);
+                sightsL = sights.isEmpty() ? null : lay(sights.toUpperCase(Locale.forLanguageTag(ro ? "ro" : "ru")), quiet(tp(forum, 10 * u, k.brz, .14f)), (int) tw, Layout.Alignment.ALIGN_NORMAL, 1.25f, 2);
+                float th = cityL.getHeight() + (sightsL != null ? 5 * u + sightsL.getHeight() : 0) + (rowH(iconS) > 0 ? 10 * u + rowH(iconS) : 0);
+                h = Math.max(th + 26 * u, 104 * u);
+            } else {
+                /* words on the left, the weather on the right */
+                phL = ph.isEmpty() ? null : lay(ph, quiet(tp(lit, 13 * u, k.mut, 0)), (int) (128 * u), Layout.Alignment.ALIGN_OPPOSITE, 1.2f, 2);
+                float pwid = 0;
+                if (phL != null) for (int i = 0; i < phL.getLineCount(); i++) pwid = Math.max(pwid, phL.getLineWidth(i));
+                float rightW = icon < 0 && temp.isEmpty() ? 0 : iconS + 8 * u + Math.max(tempW, pwid);
+                float lw = tw - rightW - (rightW > 0 ? 10 * u : 0);
+                cityL = lay(town, quiet(tp(forum, 30 * u, k.ink, 0)), (int) lw, Layout.Alignment.ALIGN_NORMAL, 1.05f, 1);
+                sightsL = sights.isEmpty() ? null : lay(sights.toUpperCase(Locale.forLanguageTag(ro ? "ro" : "ru")), quiet(tp(forum, 11 * u, k.brz, .15f)), (int) lw, Layout.Alignment.ALIGN_NORMAL, 1.25f, 2);
+                float lh = cityL.getHeight() + (sightsL != null ? 6 * u + sightsL.getHeight() : 0);
+                float rh = Math.max(icon >= 0 ? iconS : 0, tempH() + (phL != null ? 3 * u + phL.getHeight() : 0));
+                h = 14 * u + Math.max(lh, rh) + 12 * u;
+            }
         }
 
         private float tempH() {
@@ -509,28 +528,35 @@ final class SkyScene {
             return -fm.ascent + fm.descent * .3f;
         }
 
+        private float rowH(float iconS) {
+            float r = Math.max(icon >= 0 ? iconS : 0, tempH());
+            return Math.max(r, phL != null ? phL.getHeight() : 0);
+        }
+
         void draw(Canvas c, float x, float y, HeroMath.Ink k) {
             float r = 18 * u, lw = Math.max(1, .6f * u);
             int gline = dark ? 0x26ECE4D6 : 0x262E2216;
-            RectF box = new RectF(x, y, x + w, y + h);
+            RectF card = new RectF(x, y, x + w, y + h);
             Paint g = new Paint(Paint.ANTI_ALIAS_FLAG);
             g.setColor(dark ? 0x57181820 : 0x73FCFAF6);
-            c.drawRoundRect(box, r, r, g);
-            if (band > 0 && art != null) {
-                float bt = y + head;
+            c.drawRoundRect(card, r, r, g);
+            if (pic && art != null) {
+                /* the picture: the sky's colours, the landmark fitted whole and standing on the picture's bottom */
+                float px = x + w - pw;
                 c.save();
                 Path clip = new Path();
-                clip.addRoundRect(box, r, r, Path.Direction.CW);
+                clip.addRoundRect(card, r, r, Path.Direction.CW);
                 c.clipPath(clip);
-                c.clipRect(x, bt, x + w, y + h);
+                c.clipRect(px, y, x + w, y + h);
                 Paint sp = new Paint(Paint.DITHER_FLAG);
-                sp.setShader(new LinearGradient(0, bt, 0, y + h, skyCol, new float[]{0f, .55f, 1f}, Shader.TileMode.CLAMP));
-                c.drawRect(x, bt, x + w, y + h, sp);
-                float fh = focus[2] - focus[1], s = band / fh, fx0 = focus[0] - w / s / 2;
+                sp.setShader(new LinearGradient(0, y, 0, y + h, skyCol, new float[]{0f, .55f, 1f}, Shader.TileMode.CLAMP));
+                c.drawRect(px, y, x + w, y + h, sp);
+                float bw = box[1] - box[0], bh = box[3] - box[2], pad = 8 * u;
+                float s = Math.min(pw / bw, (h - pad) / bh), cx = (box[0] + box[1]) / 2;
                 Matrix m = new Matrix();
-                m.setTranslate(-fx0, -focus[1]);
+                m.setTranslate(-cx, -box[3]);
                 m.postScale(s, s);
-                m.postTranslate(x, bt);
+                m.postTranslate(px + pw / 2, y + h);
                 Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
                 Path q = new Path();
                 for (int i = 0; i < art.paths.size(); i++) {
@@ -544,40 +570,81 @@ final class SkyScene {
                 Paint ln = new Paint(Paint.ANTI_ALIAS_FLAG);
                 ln.setColor(gline);
                 ln.setStrokeWidth(lw);
-                c.drawLine(x, bt, x + w, bt, ln);
+                c.drawLine(px, y, px, y + h, ln);
             }
             Paint b = new Paint(Paint.ANTI_ALIAS_FLAG);
             b.setStyle(Paint.Style.STROKE);
             b.setStrokeWidth(lw);
             b.setColor(gline);
-            c.drawRoundRect(box, r, r, b);
-            float top = y + 14 * u, inner = head - 26 * u;
+            c.drawRoundRect(card, r, r, b);
+            float lx = x + 16 * u;
+            if (pic) {
+                float iconS = 26 * u, rh = rowH(iconS);
+                float th = cityL.getHeight() + (sightsL != null ? 5 * u + sightsL.getHeight() : 0) + (rh > 0 ? 10 * u + rh : 0);
+                float ty = y + (h - th) / 2;
+                c.save();
+                c.translate(lx, ty);
+                cityL.draw(c);
+                c.restore();
+                ty += cityL.getHeight();
+                if (sightsL != null) {
+                    c.save();
+                    c.translate(lx, ty + 5 * u);
+                    sightsL.draw(c);
+                    c.restore();
+                    ty += 5 * u + sightsL.getHeight();
+                }
+                if (rh > 0) {
+                    ty += 10 * u;
+                    float rx = lx;
+                    if (icon >= 0) {
+                        sign(c, icon, rx, ty + (rh - iconS) / 2, iconS, k.ink);
+                        rx += iconS + 8 * u;
+                    }
+                    if (!temp.isEmpty()) {
+                        tpT.setTextAlign(Paint.Align.LEFT);
+                        c.drawText(temp, rx, ty + (rh - tempH()) / 2 - tpT.getFontMetrics().ascent, tpT);
+                        rx += tpT.measureText(temp) + 8 * u;
+                    }
+                    if (phL != null) {
+                        c.save();
+                        c.translate(rx, ty + (rh - phL.getHeight()) / 2);
+                        phL.draw(c);
+                        c.restore();
+                    }
+                }
+                return;
+            }
+            float top = y + 14 * u, inner = h - 26 * u, iconS = 32 * u;
             float lh = cityL.getHeight() + (sightsL != null ? 6 * u + sightsL.getHeight() : 0), ly = top + (inner - lh) / 2;
             c.save();
-            c.translate(x + 16 * u, ly);
+            c.translate(lx, ly);
             cityL.draw(c);
             c.restore();
             if (sightsL != null) {
                 c.save();
-                c.translate(x + 16 * u, ly + cityL.getHeight() + 6 * u);
+                c.translate(lx, ly + cityL.getHeight() + 6 * u);
                 sightsL.draw(c);
                 c.restore();
             }
-            if (rightW > 0) {
-                float rx = x + w - 16 * u, col = rightW - 42 * u;
-                if (icon >= 0) sign(c, icon, rx - col - 8 * u - 34 * u, top + (inner - 34 * u) / 2, 34 * u, k.ink);
-                float rh = tempH() + (phL != null ? 3 * u + phL.getHeight() : 0), cy = top + (inner - rh) / 2;
-                if (!temp.isEmpty()) {
-                    tpT.setTextAlign(Paint.Align.RIGHT);
-                    c.drawText(temp, rx, cy - tpT.getFontMetrics().ascent, tpT);
-                    cy += tempH();
-                }
-                if (phL != null) {
-                    c.save();
-                    c.translate(rx - phL.getWidth(), cy + 3 * u);
-                    phL.draw(c);
-                    c.restore();
-                }
+            float rx = x + w - 16 * u, rh = tempH() + (phL != null ? 3 * u + phL.getHeight() : 0), cy = top + (inner - rh) / 2;
+            float colW = Math.max(temp.isEmpty() ? 0 : tpT.measureText(temp), phL != null ? phL.getWidth() : 0);
+            if (phL != null) {
+                float pwid = 0;
+                for (int i = 0; i < phL.getLineCount(); i++) pwid = Math.max(pwid, phL.getLineWidth(i));
+                colW = Math.max(temp.isEmpty() ? 0 : tpT.measureText(temp), pwid);
+            }
+            if (icon >= 0) sign(c, icon, rx - colW - 8 * u - iconS, top + (inner - iconS) / 2, iconS, k.ink);
+            if (!temp.isEmpty()) {
+                tpT.setTextAlign(Paint.Align.RIGHT);
+                c.drawText(temp, rx, cy - tpT.getFontMetrics().ascent, tpT);
+                cy += tempH();
+            }
+            if (phL != null) {
+                c.save();
+                c.translate(rx - phL.getWidth(), cy + 3 * u);
+                phL.draw(c);
+                c.restore();
             }
         }
     }
@@ -667,11 +734,17 @@ final class SkyScene {
         final float h, cw;
         final JSONObject o;
         final StaticLayout cap;
+        final boolean capOn;
         final String head;
         final HeroMath.Ink k;
         final ArrayList<float[]> rows = new ArrayList<>();
 
         Life(JSONObject o, JSONObject lab, float cw, HeroMath.Ink k) {
+            this(o, lab, cw, k, true);
+        }
+
+        Life(JSONObject o, JSONObject lab, float cw, HeroMath.Ink k, boolean capOn) {
+            this.capOn = capOn;
             this.o = o;
             this.cw = cw;
             this.k = k;
@@ -679,7 +752,7 @@ final class SkyScene {
             cap = lay(o.optString("cap", ""), tp(lit, 13 * u, k.mut, 0), (int) cw, Layout.Alignment.ALIGN_CENTER, 1.12f, 3);
             JSONArray cats = o.optJSONArray("cats");
             int lines = legend(null, 0, 0, cats);
-            h = 14 * u + 52 * u + cap.getHeight() + 10 * u + 10 * u + 10 * u + lines * 19 * u;
+            h = 14 * u + 52 * u + (capOn ? cap.getHeight() + 10 * u : 0) + 10 * u + 10 * u + lines * 19 * u;
         }
 
         int color(String key) {
@@ -756,11 +829,13 @@ final class SkyScene {
             c.drawText(n, x, base, np);
             c.drawText(un, x + nw + sp, base, up);
             y += 52 * u;
-            c.save();
-            c.translate(x0, y);
-            cap.draw(c);
-            c.restore();
-            y += cap.getHeight() + 10 * u;
+            if (capOn) {
+                c.save();
+                c.translate(x0, y);
+                cap.draw(c);
+                c.restore();
+                y += cap.getHeight() + 10 * u;
+            }
             /* the bar: every part of the life left in its colour, the free part in bronze */
             JSONArray cats = o.optJSONArray("cats");
             if (cats != null) {

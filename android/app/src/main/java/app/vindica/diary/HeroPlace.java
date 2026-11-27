@@ -41,7 +41,7 @@ final class HeroPlace {
     private static volatile long tried;
     private static List<City> cities;
     private static Art generic;
-    private static float[] gfocus = {500, 250, 380};
+    private static float[] gfocus = {500, 250, 380}, gbox = {0, 1000, 250, 380};
 
     private HeroPlace() {}
 
@@ -57,7 +57,7 @@ final class HeroPlace {
         String id, ru, ro, sru = "", sro = "";
         double lat, lon, r;
         int clear, top;
-        float[] focus;
+        float[] focus, box;
         Art art;
     }
 
@@ -153,10 +153,12 @@ final class HeroPlace {
                     x.sro = sg.optString("ro");
                 }
                 x.focus = focus(c.optJSONArray("focus"), new float[]{500, 60, 380});
+                x.box = box(c.optJSONArray("box"), new float[]{200, 800, 60, 380});
                 out.add(x);
             }
             generic = art(o.getJSONArray("generic"));
             gfocus = focus(o.optJSONArray("gfocus"), gfocus);
+            gbox = box(o.optJSONArray("gbox"), gbox);
         } catch (Exception e) {
             generic = new Art();
         }
@@ -166,6 +168,11 @@ final class HeroPlace {
     private static float[] focus(JSONArray a, float[] d) {
         if (a == null || a.length() < 3) return d;
         return new float[]{(float) a.optDouble(0, d[0]), (float) a.optDouble(1, d[1]), (float) a.optDouble(2, d[2])};
+    }
+
+    private static float[] box(JSONArray a, float[] d) {
+        if (a == null || a.length() < 4) return d;
+        return new float[]{(float) a.optDouble(0, d[0]), (float) a.optDouble(1, d[1]), (float) a.optDouble(2, d[2]), (float) a.optDouble(3, d[3])};
     }
 
     private static Art art(JSONArray a) throws Exception {
@@ -246,6 +253,12 @@ final class HeroPlace {
     static float[] focus(Context ctx) {
         City c = city(ctx);
         return c != null && c.focus != null ? c.focus : gfocus;
+    }
+
+    /* where the landmark is in the drawing: left, right, top, bottom, in art units; the card's picture fits it whole */
+    static float[] box(Context ctx) {
+        City c = city(ctx);
+        return c != null && c.box != null ? c.box : gbox;
     }
 
     /* the landmarks by name, «Тымпа · Чёрная церковь»; nothing for places without a drawing */
