@@ -5,16 +5,21 @@ import android.content.SharedPreferences;
 
 import com.getcapacitor.JSArray;
 import com.getcapacitor.JSObject;
+import com.getcapacitor.PermissionState;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
+import com.getcapacitor.annotation.Permission;
+import com.getcapacitor.annotation.PermissionCallback;
 
 import org.json.JSONException;
 
 /* the page and the home-screen widgets: the shopping list goes to «Покупки», marks made there come back;
-   the days ahead go to «Сегодня» and «Часы» */
-@CapacitorPlugin(name = "VindicaWidget")
+   the days ahead go to «Сегодня» and «Часы»; where the phone is goes to the sky, the weather and the skyline */
+@CapacitorPlugin(name = "VindicaWidget", permissions = {
+    @Permission(alias = "location", strings = {android.Manifest.permission.ACCESS_COARSE_LOCATION})
+})
 public class VindicaWidgetPlugin extends Plugin {
     private SharedPreferences prefs() {
         return getContext().getSharedPreferences(ShopWidget.PREFS, Context.MODE_PRIVATE);
@@ -92,6 +97,63 @@ public class VindicaWidgetPlugin extends Plugin {
         JSObject r = new JSObject();
         r.put("items", items);
         call.resolve(r);
+    }
+
+    /* where the phone is, as last known: {lat, lon, name, at, perm}; lat is missing until the first fix */
+    @PluginMethod
+    public void getPlace(PluginCall call) {
+        call.resolve(place());
+    }
+
+    private JSObject place() {
+        JSObject r = new JSObject();
+        HeroPlace.Place p = HeroPlace.load(getContext());
+        if (p != null) {
+            r.put("lat", p.lat);
+            r.put("lon", p.lon);
+            r.put("name", p.name);
+            r.put("at", p.at);
+        }
+        PermissionState s = getPermissionState("location");
+        r.put("perm", s == PermissionState.GRANTED ? "granted" : s == PermissionState.DENIED ? "denied" : "prompt");
+        return r;
+    }
+
+    /* looks where the phone is: asks for the permission first when ask is set (the first time, or from the settings),
+       otherwise only looks when allowed; answers once the look is done, and tells the page when the place changed */
+    @PluginMethod
+    public void locate(PluginCall call) {
+        if (getPermissionState("location") != PermissionState.GRANTED) {
+            if (Boolean.TRUE.equals(call.getBoolean("ask", false))) {
+                requestPermissionForAlias("location", call, "locatePerm");
+                return;
+            }
+            call.resolve(place());
+            return;
+        }
+        look(call);
+    }
+
+    @PermissionCallback
+    private void locatePerm(PluginCall call) {
+        if (getPermissionState("location") == PermissionState.GRANTED) look(call);
+        else call.resolve(place());
+    }
+
+    private void look(final PluginCall call) {
+        final Context ctx = getContext();
+        HeroPlace.refresh(ctx, Boolean.TRUE.equals(call.getBoolean("force", false)), call.getString("lang", ""), changed -> {
+            JSObject r = place();
+            if (changed) {
+                notifyListeners("place", r);
+                try {
+                    HeroWidget.renderAll(ctx);
+                } catch (RuntimeException e) {
+                    /* the widget looks again on its own within a minute */
+                }
+            }
+            call.resolve(r);
+        });
     }
 
     @PluginMethod

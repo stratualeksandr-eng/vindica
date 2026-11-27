@@ -54,12 +54,30 @@ sky --es fixture hero-ru-light.json --es wx "45,-1,0.4"
 shot 7-sky-night-light 8
 sky --es fixture hero-ru-nobirth.json --es wx "2,-4,0.3"
 shot 8-sky-nobirth 8
+# the place: Buzău by night (the jet on its pylon lit), Buzău by day, a town without a drawing (soft hills)
+settime 112721302026.00
+sky --es fixture hero-ru.json --es place "45.152,26.817," --es wx "2,3,0.3"
+shot 12-sky-buzau-night 8
+settime 112711052026.00
+sky --es fixture hero-ru.json --es place "45.152,26.817," --es wx "1,8,0.2"
+shot 13-sky-buzau-day 8
+settime 112716252026.00
+sky --es fixture hero-ru.json --es place "45.35,25.55,Sinaia" --es wx "71,-2,0.6"
+shot 14-sky-elsewhere 8
+sky --ez noplace true --es fixture hero-ru.json --es wx "45,1,0.8"
+shot 15-sky-noplace 6
 t 60 adb logcat -d > $OUT/logcat-a-full.txt
 grep -iE "vindica|AndroidRuntime|Wallpaper|FATAL" $OUT/logcat-a-full.txt | tail -300 > $OUT/logcat-a.txt
 
-# the real live wallpaper: the phone's preview, set it, then the home screen and a tap on the dial
+# the real live wallpaper: the phone's preview, set it, then the home screen and a tap on the dial; the phone stands
+# in Buzău (a mock fix), the wallpaper should find it by itself
 settime 112721302026.00
 t 20 adb shell am force-stop $A
+t 20 adb shell pm grant $A android.permission.ACCESS_COARSE_LOCATION
+t 20 adb shell settings put secure location_mode 3
+t 20 adb emu geo fix 26.8167 45.1517
+sleep 2
+t 20 adb emu geo fix 26.8167 45.1517
 t 30 adb shell am start -a android.service.wallpaper.CHANGE_LIVE_WALLPAPER --ecn android.service.wallpaper.extra.LIVE_WALLPAPER_COMPONENT $A/$A.SkyWallpaper
 shot 9-preview 10
 tapon "set wallpaper|set|apply|установить"
@@ -68,6 +86,10 @@ tapon "home screen|home and lock screens|home & lock screens"
 sleep 3
 t 10 adb shell input keyevent KEYCODE_HOME
 shot 10-home 8
+t 20 adb emu geo fix 26.8167 45.1517
+shot 10-home-b 20
+t 30 adb shell dumpsys location | grep -iE "last known|vindica|gps|fused|network" | head -40 > $OUT/location.txt
+t 30 adb shell run-as $A cat shared_prefs/vindica_widget.xml > $OUT/prefs.xml
 W=$(adb shell wm size | grep -o '[0-9]*x[0-9]*' | tail -1); WX=${W%x*}; WY=${W#*x}
 t 10 adb shell input tap $((WX/2)) $((WY*57/100))
 shot 11-home-tap 4

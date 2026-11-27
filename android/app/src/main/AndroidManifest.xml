@@ -104,6 +104,8 @@
     <!-- Permissions -->
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- where the phone is, roughly: the sky, the weather and the town on the horizon follow it -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- Напоминания из «Плана» точно в назначенное время, даже когда приложение закрыто -->
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.VIBRATE" />

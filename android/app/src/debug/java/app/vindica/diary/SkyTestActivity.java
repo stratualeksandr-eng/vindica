@@ -17,7 +17,8 @@ import java.io.InputStream;
 
 /* Debug builds only: the live wallpaper's picture full screen, drawn by the same SkyScene, for emulator shots.
    Extras: fixture (the page's data, a file in the app's files), flip (the dial turned over), unit (0 years, 1 weeks,
-   2 hours), wx (a weather answer to use instead of asking Open-Meteo: "code,temperature,cover"). */
+   2 hours), wx (a weather answer to use instead of asking Open-Meteo: "code,temperature,cover"), place (where the
+   phone is: "lat,lon,name"), noplace (forget the place: back to Brașov on a Romanian clock). */
 public class SkyTestActivity extends Activity {
     private final SkyScene scene = new SkyScene();
 
@@ -38,6 +39,18 @@ public class SkyTestActivity extends Activity {
                 /* the shot shows whatever is there */
             }
         }
+        if (in.getBooleanExtra("noplace", false)) getSharedPreferences(ShopWidget.PREFS, MODE_PRIVATE).edit().remove(HeroPlace.KEY).commit();
+        String place = in.getStringExtra("place");
+        if (place != null) {
+            try {
+                String[] q = place.split(",", -1);
+                HeroPlace.put(this, Double.parseDouble(q[0]), Double.parseDouble(q[1]), q.length > 2 ? q[2] : "", "ru");
+            } catch (Exception e) {
+                /* then wherever it was */
+            }
+        }
+        HeroPlace.load(this);
+        double[] here = HeroPlace.where(this);
         String wx = in.getStringExtra("wx");
         if (wx != null) {
             try {
@@ -48,6 +61,10 @@ public class SkyTestActivity extends Activity {
                 o.put("t", Double.parseDouble(p[1]));
                 o.put("cover", Double.parseDouble(p[2]));
                 o.put("wind", 2);
+                if (here != null) {
+                    o.put("lat", here[0]);
+                    o.put("lon", here[1]);
+                }
                 getSharedPreferences(ShopWidget.PREFS, MODE_PRIVATE).edit().putString(HeroWeather.KEY, o.toString()).commit();
             } catch (Exception e) {
                 /* then the real weather */

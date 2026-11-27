@@ -109,6 +109,7 @@ public class HeroWidget extends AppWidgetProvider {
 
     static synchronized void renderAll(Context ctx) {
         try {
+            HeroPlace.load(ctx);
             draw(ctx);
         } catch (RuntimeException e) {
             /* never take the app down with it; look again in a minute */
