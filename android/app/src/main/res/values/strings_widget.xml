@@ -17,4 +17,7 @@
         <item>Добрый день</item>
         <item>Добрый вечер</item>
     </string-array>
+    <string name="sky_name">Небо «Верни себя себе»</string>
+    <string name="sky_desc">Небо приложения: солнце и луна на своих местах, солнечные часы, все счётчики жизни и погода</string>
+    <string name="sky_author">Верни себя себе</string>
 </resources>
