@@ -1,0 +1,10 @@
+    network:
+    app.vindica.diary: network: Interval 600 seconds: Duration requested 0 total, 0 foreground, out of the last 1 minutes: Last active 0 minutes ago
+  Last Known Locations:
+  Last Known Locations Coarse Intervals:
+  gps provider:
+  mDisableGpsForPowerManager=false
+  network provider:
+    service={com.google.android.gms/com.google.android.location.network.NetworkLocationService}@2
+  fused provider:
+    service={com.google.android.gms/com.google.android.location.fused.FusedLocationService}@1

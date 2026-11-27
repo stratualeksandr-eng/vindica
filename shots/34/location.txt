@@ -1,0 +1,40 @@
+        10131/com.google.android.gms[network_location_provider]/B977329A Request[PASSIVE, minUpdateInterval=0, hiddenFromAppOps, WorkSource{10131 com.google.android.gms}]
+        10131/com.google.android.gms[fused_location_provider]/6B0393A2 Request[PASSIVE, minUpdateInterval=0, hiddenFromAppOps, WorkSource{10131 com.google.android.gms}]
+      last location=Location[gps 45.151698,26.816700 hAcc=5.0 et=+4m57s706ms alt=0.0 vAcc=0.5 vel=0.0 sAcc=0.5 bear=0.0 bAcc=30.0 {Bundle[{satellites=0, maxCn0=0, meanCn0=0}]}]
+    network provider:
+      identity=10131/com.google.android.gms[network_location_provider]
+      extra attribution tags={awareness_provider, activity_recognition_provider, network_location_provider, network_location_calibration, current_semantic_location, fused_location_provider, wearable_flp_shim, geofencer_provider}
+      properties=ProviderProperties[powerUsage=Medium, accuracy=Fine, requires=network, supports=[altitude]]
+      target service=10131/com.google.android.gms/com.google.android.location.network.NetworkLocationService@2
+    fused provider:
+      last location=Location[fused 45.151698,26.816700 hAcc=5.0 et=+4m57s706ms alt=0.0 vAcc=0.5 vel=0.0 sAcc=0.5]
+      identity=10131/com.google.android.gms[fused_location_provider]
+      extra attribution tags={awareness_provider, activity_recognition_provider, network_location_provider, network_location_calibration, current_semantic_location, fused_location_provider, wearable_flp_shim, geofencer_provider}
+      target service=10131/com.google.android.gms/com.google.android.location.fused.FusedLocationService@1
+    gps provider:
+      last location=Location[gps 45.151698,26.816700 hAcc=5.0 et=+4m57s706ms alt=0.0 vAcc=0.5 vel=0.0 sAcc=0.5 bear=0.0 bAcc=30.0 {Bundle[{satellites=0, maxCn0=0, meanCn0=0}]}]
+      10131/com.google.android.gms[fused_location_provider]: min/max interval = passive/passive, total/active/foreground duration = +4m36s954ms/+4m36s948ms/+4m36s954ms, locations = 2
+      10131/com.google.android.gms[network_location_provider]: min/max interval = passive/passive, total/active/foreground duration = +4m28s674ms/+4m28s672ms/+4m28s672ms, locations = 2
+    gps:
+      10192/app.vindica.diary: min/max interval = 0s/0s, total/active/foreground duration = +5s347ms/+5s341ms/+5s309ms, locations = 1
+    fused:
+      10192/app.vindica.diary: min/max interval = 0s/0s, total/active/foreground duration = +50s4ms/+50s2ms/+50s3ms, locations = 0
+    network:
+    GNSS Hardware Model Name: Android Studio Emulator GPS
+        10131/com.google.android.gms[fused_location_provider]/BD664E8A
+        10131/com.google.android.gms[network_location_provider]/7B74FD8E
+    11-27 21:26:09.919: gps provider [u0] enabled
+    11-27 21:26:09.923: network provider +registration 1000/android[GnssService]/F820D3BA -> Request[PASSIVE, minUpdateInterval=0, hiddenFromAppOps, WorkSource{1000 android}]
+    11-27 21:26:10.212: gps provider [u0] enabled
+    11-27 21:26:11.035: fused provider [u0] enabled
+    11-27 21:26:16.077: fused provider [u0] disabled
+    11-27 21:26:16.097: fused provider [u0] enabled
+    11-27 21:26:17.624: passive provider +registration 10131/com.google.android.gms[fused_location_provider]/E4783E32 -> Request[PASSIVE, minUpdateInterval=0, hiddenFromAppOps, WorkSource{10131 com.google.android.gms}]
+    11-27 21:26:19.792: network provider [u0] enabled
+    11-27 21:26:20.574: network provider +registration 10125/com.google.android.as/53D6D96F -> Request[@+6h0m0s0ms BALANCED, minUpdateDistance=100000.0, WorkSource{10125 com.google.android.as}]
+    11-27 21:26:20.578: network provider request = ProviderRequest[@+6h0m0s0ms, LOW_POWER, WorkSource{10125 com.google.android.as}]
+    11-27 21:26:23.815: passive provider +registration 10131/com.google.android.gms[network_location_provider]/1829F34F -> Request[PASSIVE, minUpdateInterval=0, hiddenFromAppOps, WorkSource{10131 com.google.android.gms}]
+    11-27 21:27:24.550: passive provider -registration 10131/com.google.android.gms[fused_location_provider]/E4783E32
+    11-27 21:27:24.556: passive provider -registration 10131/com.google.android.gms[network_location_provider]/1829F34F
+    11-27 21:27:24.976: passive provider +registration 10131/com.google.android.gms[fused_location_provider]/6B0393A2 -> Request[PASSIVE, minUpdateInterval=0, hiddenFromAppOps, WorkSource{10131 com.google.android.gms}]
+    11-27 21:27:25.554: network provider [u0] disabled

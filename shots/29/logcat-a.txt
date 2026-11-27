@@ -1,0 +1,263 @@
+11-27 14:43:29.079  1665  1665 D AndroidRuntime: >>>>>> START com.android.internal.os.ZygoteInit uid 0 <<<<<<
+11-27 14:43:29.209  1665  1665 I AndroidRuntime: Using default boot image
+11-27 14:43:29.209  1665  1665 I AndroidRuntime: Leaving lock profiling enabled
+11-27 14:43:29.243  1666  1666 D AndroidRuntime: >>>>>> START com.android.internal.os.ZygoteInit uid 0 <<<<<<
+11-27 14:43:29.340  1666  1666 I AndroidRuntime: Using default boot image
+11-27 14:43:29.340  1666  1666 I AndroidRuntime: Leaving lock profiling enabled
+11-27 14:43:30.709  1879  1879 I PackageManager: /system/app/LiveWallpapersPicker changed; collecting certs
+11-27 14:43:30.715  1879  1879 I PackageManager: /system/app/WallpaperBackup changed; collecting certs
+11-27 14:43:30.715  1879  1879 E PackageManager: Adding duplicate shared id: 1000 name=com.android.wallpaperbackup
+11-27 14:43:30.760  1879  1879 I PackageManager: /system/app/WallpapersUsTwo changed; collecting certs
+11-27 14:43:30.786  1879  1879 I PackageManager: /system/product/priv-app/WallpaperPickerGooglePrebuilt changed; collecting certs
+11-27 14:43:30.970  1879  1879 I PackageManager: /system/product/app/NexusWallpapersStubPrebuilt2018 changed; collecting certs
+11-27 14:43:31.126  1879  1879 I PackageManager: /system/product/app/WallpapersBReel2018 changed; collecting certs
+11-27 14:43:31.179  1879  1879 I PackageManager: Un-granting permission android.permission.BIND_WALLPAPER from package com.android.camera2 (protectionLevel=18 flags=0x2058bc45)
+11-27 14:43:31.849  1879  1879 I SystemServer: StartWallpaperManagerService
+11-27 14:43:31.849  1879  1879 I SystemServiceManager: Starting com.android.server.wallpaper.WallpaperManagerService$Lifecycle
+11-27 14:43:31.850  1879  1879 D SystemServerTiming: StartWallpaperManagerService took to complete: 1ms
+11-27 14:43:32.130  1879  1879 I PackageManager: Un-granting permission android.permission.BIND_WALLPAPER from package com.android.camera2 (protectionLevel=18 flags=0x20d8bc45)
+11-27 14:43:32.181  1879  1879 I WallpaperManagerService: No static wallpaper imagery; defaults will be shown
+11-27 14:43:32.181  1879  1879 V WallpaperManagerService: bindWallpaperComponentLocked: componentName=ComponentInfo{com.android.systemui/com.android.systemui.ImageWallpaper}
+11-27 14:43:32.181  1879  1879 W WallpaperManagerService: no current wallpaper -- first boot?
+11-27 14:43:32.203  1879  1932 I ActivityManager: Start proc 2065:com.android.systemui/u0a116 for service {com.android.systemui/com.android.systemui.ImageWallpaper}
+11-27 14:43:32.304  1879  1902 I PackageManager: Un-granting permission android.permission.BIND_WALLPAPER from package com.android.camera2 (protectionLevel=18 flags=0x20d8bc45)
+11-27 14:43:32.304  1879  1902 I PackageManager: Un-granting permission android.permission.BIND_WALLPAPER from package com.android.camera2 (protectionLevel=18 flags=0x20d8bc45)
+11-27 14:43:32.304  1879  2062 I PackageManager: Un-granting permission android.permission.BIND_WALLPAPER from package com.android.camera2 (protectionLevel=18 flags=0x20d8bc45)
+11-27 14:43:32.477  1879  1879 V WallpaperManagerService: bindWallpaperComponentLocked: componentName=null
+11-27 14:43:32.477  1879  1879 V WallpaperManagerService: No default component; using image wallpaper
+11-27 14:43:32.653  2206  2206 I AndroidRuntime: VM exiting with result code 0, cleanup skipped.
+11-27 14:43:32.667  1879  1922 W Looper  : Slow dispatch took 190ms android.fg h=android.os.Handler c=com.android.server.wallpaper.-$$Lambda$WallpaperManagerService$xeJGAwCI8tssclwKFf8jMsYdoKQ@b572ec7 m=0
+11-27 14:43:32.685  2213  2213 I AndroidRuntime: VM exiting with result code 0, cleanup skipped.
+11-27 14:43:36.905  2869  2869 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+11-27 14:43:36.930  2869  2869 I AndroidRuntime: Using default boot image
+11-27 14:43:36.933  2869  2869 I AndroidRuntime: Leaving lock profiling enabled
+11-27 14:43:37.477  2869  2869 D AndroidRuntime: Calling main entry com.android.commands.input.Input
+11-27 14:43:37.854  2869  2869 D AndroidRuntime: Shutting down VM
+11-27 14:43:39.808  1879  1946 I PackageManager: Un-granting permission android.permission.BIND_WALLPAPER from package com.android.camera2 (protectionLevel=18 flags=0x20d8bc45)
+11-27 14:43:39.981  1879  1946 V BackupManagerService: restoreAtInstall pkg=app.vindica.diary token=1 restoreSet=0
+11-27 14:43:40.500  3492  3492 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+11-27 14:43:40.501  3492  3492 I AndroidRuntime: Using default boot image
+11-27 14:43:40.502  3492  3492 I AndroidRuntime: Leaving lock profiling enabled
+11-27 14:43:40.983  3492  3492 D AndroidRuntime: Calling main entry com.android.commands.appwidget.AppWidget
+11-27 14:43:40.983  3492  3492 D AndroidRuntime: Shutting down VM
+11-27 14:43:43.275  2041  3558 W GCM     : Unexpected forwarded intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.vindica.diary flg=0x4000010 cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) }
+11-27 14:43:43.296  2041  3558 W GCM     : Unexpected forwarded intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.vindica.diary flg=0x4000010 cmp=com.google.android.gms/.chimera.PersistentIntentOperationService (has extras) }
+11-27 14:43:43.418  2461  3774 I ChromeSync: [Sync,SyncIntentOperation] Handling the intent: Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.vindica.diary flg=0x4000010 cmp=com.google.android.gms/.chimera.GmsIntentOperationService (has extras) }.
+11-27 14:43:43.419  2461  3781 I FontLog : Package app.vindica.diary has no metadata [CONTEXT service_id=132 ]
+11-27 14:43:43.449  2461  3774 I ChromeSync: [Persistence,AffiliationManager] One of affiliation or grouping data for android://d1JJVuBOnwepQT634Ncy0AytJH90DlWa5eYUyVHzgyu4e4MuDzaHsbwvE1TRvc3k6J7Yw6ML5nUuF7Dhf98Wtg==@app.vindica.diary/ was not found. Marking affiliation data as stale...
+11-27 14:43:45.997  1879  2062 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.vindica.diary flg=0x4000010 (has extras) } to com.google.android.packageinstaller/com.android.packageinstaller.PackageInstalledReceiver
+11-27 14:43:45.997  1879  1931 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.vindica.diary flg=0x4000010 (has extras) } to com.android.musicfx/.Compatibility$Receiver
+11-27 14:43:45.998  1879  1931 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.vindica.diary flg=0x4000010 (has extras) } to com.google.android.apps.enterprise.dmagent/.AppUpdateReceiver
+11-27 14:43:45.998  1879  1931 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.vindica.diary flg=0x4000010 (has extras) } to com.google.android.gms/.games.chimera.GamesSystemBroadcastReceiverProxy
+11-27 14:43:45.998  1879  1931 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.vindica.diary flg=0x4000010 (has extras) } to com.google.android.gms/.gass.chimera.PackageChangeBroadcastReceiver
+11-27 14:43:45.998  1879  1931 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.vindica.diary flg=0x4000010 (has extras) } to com.google.android.gms/.chimera.GmsIntentOperationService$PersistentTrustedReceiver
+11-27 14:43:45.998  1879  1931 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.vindica.diary flg=0x4000010 (has extras) } to com.google.android.googlequicksearchbox/com.google.android.apps.gsa.googlequicksearchbox.GelStubAppWatcher
+11-27 14:43:45.998  1879  1931 W BroadcastQueue: Background execution not allowed: receiving Intent { act=android.intent.action.PACKAGE_ADDED dat=package:app.vindica.diary flg=0x4000010 (has extras) } to com.google.android.ims/.receivers.RcsAutoStartReceiver
+11-27 14:43:47.703  4462  4462 W sh      : type=1400 audit(0.0:30): avc: denied { ioctl } for path="socket:[33989]" dev="sockfs" ino=33989 ioctlcmd=0x5401 scontext=u:r:runas_app:s0:c146,c256,c512,c768 tcontext=u:r:su:s0 tclass=unix_stream_socket permissive=0 app=app.vindica.diary
+11-27 14:43:47.713  4462  4462 W sh      : type=1400 audit(0.0:31): avc: denied { ioctl } for path="socket:[33991]" dev="sockfs" ino=33991 ioctlcmd=0x5401 scontext=u:r:runas_app:s0:c146,c256,c512,c768 tcontext=u:r:su:s0 tclass=unix_stream_socket permissive=0 app=app.vindica.diary
+11-27 21:30:00.085  1879  2922 I ActivityManager: Force stopping app.vindica.diary appid=10146 user=0: from pid 4482
+11-27 21:30:00.336  1879  2922 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.vindica.diary/.WidgetHostActivity (has extras)} from uid 0
+11-27 21:30:00.371  4514  4514 I p.vindica.diar: Late-enabling -Xcheck:jni
+11-27 21:30:00.379  4514  4514 E p.vindica.diar: Unknown bits set in runtime_flags: 0x8000
+11-27 21:30:00.379  4514  4514 W p.vindica.diar: Unexpected CPU variant for X86 using defaults: x86_64
+11-27 21:30:00.383  1879  2856 I ActivityManager: Start proc 4514:app.vindica.diary/u0a146 for activity {app.vindica.diary/app.vindica.diary.WidgetHostActivity}
+11-27 21:30:01.110  1879  1930 I ActivityTaskManager: Displayed app.vindica.diary/.WidgetHostActivity: +773ms
+11-27 21:30:05.683  4514  4536 I p.vindica.diar: Waiting for a blocking GC ProfileSaver
+11-27 21:30:05.824  4514  4525 I p.vindica.diar: NativeAlloc concurrent copying GC freed 10563(730KB) AllocSpace objects, 3(124KB) LOS objects, 49% free, 1741KB/3482KB, paused 11us total 202.412ms
+11-27 21:30:05.835  4514  4536 I p.vindica.diar: WaitForGcToComplete blocked ProfileSaver on ClassLinker for 152.071ms
+11-27 21:30:05.887  4514  4956 D ProfileInstaller: Installing profile for app.vindica.diary
+11-27 21:30:11.046  1879  3495 I ActivityManager: Force stopping app.vindica.diary appid=10146 user=0: from pid 5167
+11-27 21:30:11.047  1879  3495 I ActivityManager: Killing 4514:app.vindica.diary/u0a146 (adj 0): stop app.vindica.diary
+11-27 21:30:11.051  1879  3495 W ActivityTaskManager: Force removing ActivityRecord{678364e u0 app.vindica.diary/.WidgetHostActivity t6 f}: app died, no saved state
+11-27 21:30:11.336  1879  3495 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.vindica.diary/.SkyTestActivity (has extras)} from uid 0
+11-27 21:30:11.389  1879  1932 I ActivityManager: Start proc 5210:app.vindica.diary/u0a146 for activity {app.vindica.diary/app.vindica.diary.SkyTestActivity}
+11-27 21:30:11.391  5210  5210 I p.vindica.diar: Late-enabling -Xcheck:jni
+11-27 21:30:11.425  5210  5210 E p.vindica.diar: Unknown bits set in runtime_flags: 0x8000
+11-27 21:30:11.425  5210  5210 W p.vindica.diar: Unexpected CPU variant for X86 using defaults: x86_64
+11-27 21:30:11.629  5210  5210 W RenderThread: type=1400 audit(0.0:40): avc: denied { write } for name="property_service" dev="tmpfs" ino=837 scontext=u:r:untrusted_app:s0:c146,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0 app=app.vindica.diary
+11-27 21:30:12.441  1879  1930 I ActivityTaskManager: Displayed app.vindica.diary/.SkyTestActivity: +1s105ms
+11-27 21:30:13.327  1879  5608 I ActivityManager: Start proc 5623:com.google.android.apps.wallpaper/u0a105 for broadcast {com.google.android.apps.wallpaper/com.android.wallpaper.module.RotationWallpaperMoveReceiver}
+11-27 21:30:13.495  1879  1879 E AppWidgetServiceImpl: Widget host dead: HostId{user:0, app:10146, hostId:1024, pkg:app.vindica.diary}
+11-27 21:30:16.365  1879  6298 I ActivityManager: Killing 5623:com.google.android.apps.wallpaper/u0a105 (adj 985): empty #17
+11-27 21:30:16.863  5210  6314 D ProfileInstaller: Installing profile for app.vindica.diary
+11-27 21:30:22.859  1879  3495 I ActivityManager: Force stopping app.vindica.diary appid=10146 user=0: from pid 6457
+11-27 21:30:22.859  1879  3495 I ActivityManager: Killing 5210:app.vindica.diary/u0a146 (adj 0): stop app.vindica.diary
+11-27 21:30:22.859  1879  3495 W ActivityTaskManager: Force removing ActivityRecord{984d21f u0 app.vindica.diary/.SkyTestActivity t7 f}: app died, no saved state
+11-27 21:30:23.134  1879  3495 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.vindica.diary/.SkyTestActivity (has extras)} from uid 0
+11-27 21:30:23.201  1879  1932 I ActivityManager: Start proc 6460:app.vindica.diary/u0a146 for activity {app.vindica.diary/app.vindica.diary.SkyTestActivity}
+11-27 21:30:23.206  6460  6460 I p.vindica.diar: Late-enabling -Xcheck:jni
+11-27 21:30:23.234  6460  6460 E p.vindica.diar: Unknown bits set in runtime_flags: 0x8000
+11-27 21:30:23.235  6460  6460 W p.vindica.diar: Unexpected CPU variant for X86 using defaults: x86_64
+11-27 21:30:23.679  6460  6460 W RenderThread: type=1400 audit(0.0:45): avc: denied { write } for name="property_service" dev="tmpfs" ino=837 scontext=u:r:untrusted_app:s0:c146,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0 app=app.vindica.diary
+11-27 21:30:24.202  1879  1930 I ActivityTaskManager: Displayed app.vindica.diary/.SkyTestActivity: +1s68ms
+11-27 21:30:29.106  6460  6589 D ProfileInstaller: Installing profile for app.vindica.diary
+11-27 11:05:00.053  1879  2855 I ActivityManager: Force stopping app.vindica.diary appid=10146 user=0: from pid 6638
+11-27 11:05:00.054  1879  2855 I ActivityManager: Killing 6460:app.vindica.diary/u0a146 (adj 0): stop app.vindica.diary
+11-27 11:05:00.055  1879  2855 W ActivityTaskManager: Force removing ActivityRecord{c75e4c7 u0 app.vindica.diary/.SkyTestActivity t8 f}: app died, no saved state
+11-27 11:05:00.319  1879  2855 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.vindica.diary/.SkyTestActivity (has extras)} from uid 0
+11-27 11:05:00.530  1879  1932 I ActivityManager: Start proc 6672:app.vindica.diary/u0a146 for activity {app.vindica.diary/app.vindica.diary.SkyTestActivity}
+11-27 11:05:00.535  6672  6672 I p.vindica.diar: Late-enabling -Xcheck:jni
+11-27 11:05:00.564  6672  6672 E p.vindica.diar: Unknown bits set in runtime_flags: 0x8000
+11-27 11:05:00.565  6672  6672 W p.vindica.diar: Unexpected CPU variant for X86 using defaults: x86_64
+11-27 11:05:00.949  6672  6672 W RenderThread: type=1400 audit(0.0:46): avc: denied { write } for name="property_service" dev="tmpfs" ino=837 scontext=u:r:untrusted_app:s0:c146,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0 app=app.vindica.diary
+11-27 11:05:01.281  1879  1930 I ActivityTaskManager: Displayed app.vindica.diary/.SkyTestActivity: +947ms
+11-27 11:05:06.239  6672  6747 D ProfileInstaller: Installing profile for app.vindica.diary
+11-27 11:05:09.523  1879  2832 I ActivityManager: Force stopping app.vindica.diary appid=10146 user=0: from pid 6765
+11-27 11:05:09.523  1879  2832 I ActivityManager: Killing 6672:app.vindica.diary/u0a146 (adj 0): stop app.vindica.diary
+11-27 11:05:09.523  1879  2832 W ActivityTaskManager: Force removing ActivityRecord{3138e48 u0 app.vindica.diary/.SkyTestActivity t9 f}: app died, no saved state
+11-27 11:05:09.784  1879  2832 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.vindica.diary/.SkyTestActivity (has extras)} from uid 0
+11-27 11:05:09.921  1879  1932 I ActivityManager: Start proc 6768:app.vindica.diary/u0a146 for activity {app.vindica.diary/app.vindica.diary.SkyTestActivity}
+11-27 11:05:09.975  6768  6768 I p.vindica.diar: Late-enabling -Xcheck:jni
+11-27 11:05:10.042  6768  6768 E p.vindica.diar: Unknown bits set in runtime_flags: 0x8000
+11-27 11:05:10.042  6768  6768 W p.vindica.diar: Unexpected CPU variant for X86 using defaults: x86_64
+11-27 11:05:10.329  6768  6768 W RenderThread: type=1400 audit(0.0:47): avc: denied { write } for name="property_service" dev="tmpfs" ino=837 scontext=u:r:untrusted_app:s0:c146,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0 app=app.vindica.diary
+11-27 11:05:10.752  1879  1930 I ActivityTaskManager: Displayed app.vindica.diary/.SkyTestActivity: +967ms
+11-27 11:05:12.104  1879  6802 I PackageManager.DexOptimizer: Running dexopt (dexoptNeeded=1) on: /data/app/app.vindica.diary-LYoFYMuwpZXBsnUwr4SFlQ==/base.apk pkg=app.vindica.diary isa=x86_64 dexoptFlags=boot_complete,debuggable,public,enable_hidden_api_checks targetFilter=verify oatDir=/data/app/app.vindica.diary-LYoFYMuwpZXBsnUwr4SFlQ==/oat classLoaderContext=PCL[]
+11-27 11:05:12.105  1790  2773 V installd: DexInv: --- BEGIN '/data/app/app.vindica.diary-LYoFYMuwpZXBsnUwr4SFlQ==/base.apk' ---
+11-27 11:05:12.126  6831  6831 I dex2oat : /apex/com.android.runtime/bin/dex2oat --input-vdex-fd=-1 --output-vdex-fd=10 --resolve-startup-const-strings=true --max-image-block-size=524288 --compiler-filter=verify --debuggable --classpath-dir=/data/app/app.vindica.diary-LYoFYMuwpZXBsnUwr4SFlQ== --class-loader-context=PCL[] --generate-mini-debug-info --compact-dex-level=none --compilation-reason=boot
+11-27 11:05:12.566  1790  2773 V installd: DexInv: --- END '/data/app/app.vindica.diary-LYoFYMuwpZXBsnUwr4SFlQ==/base.apk' (success) ---
+11-27 11:05:12.658  1879  6802 I BackgroundDexOptService: Pinning optimized code {app.vindica.diary}
+11-27 11:05:15.879  6768  6846 D ProfileInstaller: Installing profile for app.vindica.diary
+11-27 16:25:00.111  1879  2175 I ActivityManager: Force stopping app.vindica.diary appid=10146 user=0: from pid 6864
+11-27 16:25:00.111  1879  2175 I ActivityManager: Killing 6768:app.vindica.diary/u0a146 (adj 0): stop app.vindica.diary
+11-27 16:25:00.112  1879  2175 W ActivityTaskManager: Force removing ActivityRecord{a729824 u0 app.vindica.diary/.SkyTestActivity t10 f}: app died, no saved state
+11-27 16:25:00.372  1879  2175 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.vindica.diary/.SkyTestActivity (has extras)} from uid 0
+11-27 16:25:00.499  6874  6874 I p.vindica.diar: Late-enabling -Xcheck:jni
+11-27 16:25:00.521  6874  6874 E p.vindica.diar: Unknown bits set in runtime_flags: 0x8000
+11-27 16:25:00.522  6874  6874 W p.vindica.diar: Unexpected CPU variant for X86 using defaults: x86_64
+11-27 16:25:00.532  1879  1932 I ActivityManager: Start proc 6874:app.vindica.diary/u0a146 for activity {app.vindica.diary/app.vindica.diary.SkyTestActivity}
+11-27 16:25:00.759  6874  6874 W RenderThread: type=1400 audit(0.0:48): avc: denied { write } for name="property_service" dev="tmpfs" ino=837 scontext=u:r:untrusted_app:s0:c146,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0 app=app.vindica.diary
+11-27 16:25:01.344  1879  1930 I ActivityTaskManager: Displayed app.vindica.diary/.SkyTestActivity: +946ms
+11-27 16:25:06.146  6874  6917 D ProfileInstaller: Installing profile for app.vindica.diary
+11-27 23:10:00.069  1879  2151 I ActivityManager: Force stopping app.vindica.diary appid=10146 user=0: from pid 6936
+11-27 23:10:00.069  1879  2151 I ActivityManager: Killing 6874:app.vindica.diary/u0a146 (adj 0): stop app.vindica.diary
+11-27 23:10:00.070  1879  2151 W ActivityTaskManager: Force removing ActivityRecord{399abab u0 app.vindica.diary/.SkyTestActivity t11 f}: app died, no saved state
+11-27 23:10:00.343  1879  2151 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.vindica.diary/.SkyTestActivity (has extras)} from uid 0
+11-27 23:10:00.427  6947  6947 I p.vindica.diar: Late-enabling -Xcheck:jni
+11-27 23:10:00.434  6947  6947 E p.vindica.diar: Unknown bits set in runtime_flags: 0x8000
+11-27 23:10:00.435  6947  6947 W p.vindica.diar: Unexpected CPU variant for X86 using defaults: x86_64
+11-27 23:10:00.436  1879  1932 I ActivityManager: Start proc 6947:app.vindica.diary/u0a146 for activity {app.vindica.diary/app.vindica.diary.SkyTestActivity}
+11-27 23:10:00.729  6947  6947 W RenderThread: type=1400 audit(0.0:49): avc: denied { write } for name="property_service" dev="tmpfs" ino=837 scontext=u:r:untrusted_app:s0:c146,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0 app=app.vindica.diary
+11-27 23:10:01.191  1879  1930 I ActivityTaskManager: Displayed app.vindica.diary/.SkyTestActivity: +828ms
+11-27 23:10:06.115  1879  1932 I ActivityManager: Start proc 6987:com.google.android.apps.wallpaper/u0a105 for broadcast {com.google.android.apps.wallpaper/com.android.wallpaper.module.DailyLoggingAlarmReceiver}
+11-27 23:10:06.203  6947  7012 D ProfileInstaller: Installing profile for app.vindica.diary
+11-27 23:10:09.545  1879  2855 I ActivityManager: Force stopping app.vindica.diary appid=10146 user=0: from pid 7026
+11-27 23:10:09.546  1879  2855 I ActivityManager: Killing 6947:app.vindica.diary/u0a146 (adj 0): stop app.vindica.diary
+11-27 23:10:09.546  1879  2855 W ActivityTaskManager: Force removing ActivityRecord{f07282e u0 app.vindica.diary/.SkyTestActivity t12 f}: app died, no saved state
+11-27 23:10:09.808  1879  2855 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.vindica.diary/.SkyTestActivity (has extras)} from uid 0
+11-27 23:10:09.956  1879  1932 I ActivityManager: Start proc 7031:app.vindica.diary/u0a146 for activity {app.vindica.diary/app.vindica.diary.SkyTestActivity}
+11-27 23:10:09.985  7031  7031 I p.vindica.diar: Late-enabling -Xcheck:jni
+11-27 23:10:10.020  7031  7031 E p.vindica.diar: Unknown bits set in runtime_flags: 0x8000
+11-27 23:10:10.021  7031  7031 W p.vindica.diar: Unexpected CPU variant for X86 using defaults: x86_64
+11-27 23:10:10.259  7031  7031 W RenderThread: type=1400 audit(0.0:50): avc: denied { write } for name="property_service" dev="tmpfs" ino=837 scontext=u:r:untrusted_app:s0:c146,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0 app=app.vindica.diary
+11-27 23:10:10.579  1879  1930 I ActivityTaskManager: Displayed app.vindica.diary/.SkyTestActivity: +741ms
+11-27 23:10:16.042  7031  7087 D ProfileInstaller: Installing profile for app.vindica.diary
+11-27 21:30:00.065  1879  6298 I ActivityManager: Force stopping app.vindica.diary appid=10146 user=0: from pid 7105
+11-27 21:30:00.065  1879  6298 I ActivityManager: Killing 7031:app.vindica.diary/u0a146 (adj 0): stop app.vindica.diary
+11-27 21:30:00.065  1879  6298 W ActivityTaskManager: Force removing ActivityRecord{aacd99d u0 app.vindica.diary/.SkyTestActivity t13 f}: app died, no saved state
+11-27 21:30:00.324  1879  6298 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.vindica.diary/.SkyTestActivity (has extras)} from uid 0
+11-27 21:30:00.361  1879  1932 I ActivityManager: Start proc 7110:app.vindica.diary/u0a146 for activity {app.vindica.diary/app.vindica.diary.SkyTestActivity}
+11-27 21:30:00.526  7110  7110 I p.vindica.diar: Late-enabling -Xcheck:jni
+11-27 21:30:00.669  7110  7110 E p.vindica.diar: Unknown bits set in runtime_flags: 0x8000
+11-27 21:30:00.669  7110  7110 W p.vindica.diar: Unexpected CPU variant for X86 using defaults: x86_64
+11-27 21:30:00.789  7110  7110 W RenderThread: type=1400 audit(0.0:52): avc: denied { write } for name="property_service" dev="tmpfs" ino=837 scontext=u:r:untrusted_app:s0:c146,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0 app=app.vindica.diary
+11-27 21:30:01.151  1879  1930 I ActivityTaskManager: Displayed app.vindica.diary/.SkyTestActivity: +818ms
+11-27 21:30:06.671  7110  7193 D ProfileInstaller: Installing profile for app.vindica.diary
+11-27 11:05:00.061  1879  6298 I ActivityManager: Force stopping app.vindica.diary appid=10146 user=0: from pid 7213
+11-27 11:05:00.061  1879  6298 I ActivityManager: Killing 7110:app.vindica.diary/u0a146 (adj 0): stop app.vindica.diary
+11-27 11:05:00.062  1879  6298 W ActivityTaskManager: Force removing ActivityRecord{1df71b6 u0 app.vindica.diary/.SkyTestActivity t14 f}: app died, no saved state
+11-27 11:05:00.342  1879  6298 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.vindica.diary/.SkyTestActivity (has extras)} from uid 0
+11-27 11:05:00.507  1879  1932 I ActivityManager: Start proc 7219:app.vindica.diary/u0a146 for activity {app.vindica.diary/app.vindica.diary.SkyTestActivity}
+11-27 11:05:00.509  7219  7219 I p.vindica.diar: Late-enabling -Xcheck:jni
+11-27 11:05:00.517  7219  7219 E p.vindica.diar: Unknown bits set in runtime_flags: 0x8000
+11-27 11:05:00.517  7219  7219 W p.vindica.diar: Unexpected CPU variant for X86 using defaults: x86_64
+11-27 11:05:00.679  7219  7219 W RenderThread: type=1400 audit(0.0:53): avc: denied { write } for name="property_service" dev="tmpfs" ino=837 scontext=u:r:untrusted_app:s0:c146,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0 app=app.vindica.diary
+11-27 11:05:01.078  1879  1930 I ActivityTaskManager: Displayed app.vindica.diary/.SkyTestActivity: +735ms
+11-27 11:05:06.512  7219  7254 D ProfileInstaller: Installing profile for app.vindica.diary
+11-27 16:25:00.077  1879  5608 I ActivityManager: Force stopping app.vindica.diary appid=10146 user=0: from pid 7313
+11-27 16:25:00.078  1879  5608 I ActivityManager: Killing 7219:app.vindica.diary/u0a146 (adj 0): stop app.vindica.diary
+11-27 16:25:00.082  1879  5608 W ActivityTaskManager: Force removing ActivityRecord{b255a5a u0 app.vindica.diary/.SkyTestActivity t15 f}: app died, no saved state
+11-27 16:25:00.360  1879  5608 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.vindica.diary/.SkyTestActivity (has extras)} from uid 0
+11-27 16:25:00.464  7322  7322 I p.vindica.diar: Late-enabling -Xcheck:jni
+11-27 16:25:00.476  1879  1932 I ActivityManager: Start proc 7322:app.vindica.diary/u0a146 for activity {app.vindica.diary/app.vindica.diary.SkyTestActivity}
+11-27 16:25:00.488  7322  7322 E p.vindica.diar: Unknown bits set in runtime_flags: 0x8000
+11-27 16:25:00.494  7322  7322 W p.vindica.diar: Unexpected CPU variant for X86 using defaults: x86_64
+11-27 16:25:00.859  7322  7322 W RenderThread: type=1400 audit(0.0:54): avc: denied { write } for name="property_service" dev="tmpfs" ino=837 scontext=u:r:untrusted_app:s0:c146,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0 app=app.vindica.diary
+11-27 16:25:01.254  1879  1930 I ActivityTaskManager: Displayed app.vindica.diary/.SkyTestActivity: +862ms
+11-27 16:25:06.209  7322  7358 D ProfileInstaller: Installing profile for app.vindica.diary
+11-27 16:25:09.532  1879  3216 I ActivityManager: Force stopping app.vindica.diary appid=10146 user=0: from pid 7373
+11-27 16:25:09.532  1879  3216 I ActivityManager: Killing 7322:app.vindica.diary/u0a146 (adj 0): stop app.vindica.diary
+11-27 16:25:09.532  1879  3216 W ActivityTaskManager: Force removing ActivityRecord{1adf156 u0 app.vindica.diary/.SkyTestActivity t16 f}: app died, no saved state
+11-27 16:25:09.789  1879  3216 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.vindica.diary/.SkyTestActivity (has extras)} from uid 0
+11-27 16:25:09.905  1879  1932 I ActivityManager: Start proc 7381:app.vindica.diary/u0a146 for activity {app.vindica.diary/app.vindica.diary.SkyTestActivity}
+11-27 16:25:09.909  7381  7381 I p.vindica.diar: Late-enabling -Xcheck:jni
+11-27 16:25:09.918  7381  7381 E p.vindica.diar: Unknown bits set in runtime_flags: 0x8000
+11-27 16:25:09.918  7381  7381 W p.vindica.diar: Unexpected CPU variant for X86 using defaults: x86_64
+11-27 16:25:10.059  7381  7381 W RenderThread: type=1400 audit(0.0:55): avc: denied { write } for name="property_service" dev="tmpfs" ino=837 scontext=u:r:untrusted_app:s0:c146,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0 app=app.vindica.diary
+11-27 16:25:10.636  1879  1930 I ActivityTaskManager: Displayed app.vindica.diary/.SkyTestActivity: +844ms
+11-27 16:25:16.121  7381  7410 D ProfileInstaller: Installing profile for app.vindica.diary
+11-27 12:10:00.018  1879  5346 I ActivityManager: Force stopping app.vindica.diary appid=10146 user=0: from pid 7425
+11-27 12:10:00.018  1879  5346 I ActivityManager: Killing 7381:app.vindica.diary/u0a146 (adj 0): stop app.vindica.diary
+11-27 12:10:00.018  1879  5346 W ActivityTaskManager: Force removing ActivityRecord{13c918a u0 app.vindica.diary/.SkyTestActivity t17 f}: app died, no saved state
+11-27 12:10:00.278  1879  5346 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.vindica.diary/.SkyTestActivity (has extras)} from uid 0
+11-27 12:10:00.384  1879  1932 I ActivityManager: Start proc 7434:app.vindica.diary/u0a146 for activity {app.vindica.diary/app.vindica.diary.SkyTestActivity}
+11-27 12:10:00.470  7434  7434 I p.vindica.diar: Late-enabling -Xcheck:jni
+11-27 12:10:00.515  7434  7434 E p.vindica.diar: Unknown bits set in runtime_flags: 0x8000
+11-27 12:10:00.515  7434  7434 W p.vindica.diar: Unexpected CPU variant for X86 using defaults: x86_64
+11-27 12:10:00.719  7434  7434 W RenderThread: type=1400 audit(0.0:56): avc: denied { write } for name="property_service" dev="tmpfs" ino=837 scontext=u:r:untrusted_app:s0:c146,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0 app=app.vindica.diary
+11-27 12:10:01.231  1879  1930 I ActivityTaskManager: Displayed app.vindica.diary/.SkyTestActivity: +948ms
+11-27 12:10:06.234  7434  7475 D ProfileInstaller: Installing profile for app.vindica.diary
+11-27 21:30:00.038  1879  3485 I ActivityManager: Force stopping app.vindica.diary appid=10146 user=0: from pid 7492
+11-27 21:30:00.038  1879  3485 I ActivityManager: Killing 7434:app.vindica.diary/u0a146 (adj 0): stop app.vindica.diary
+11-27 21:30:00.040  1879  3485 W ActivityTaskManager: Force removing ActivityRecord{733e6f5 u0 app.vindica.diary/.SkyTestActivity t18 f}: app died, no saved state
+11-27 21:30:00.304  1879  3485 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.vindica.diary/.SkyTestActivity (has extras)} from uid 0
+11-27 21:30:00.344  1879  1932 I ActivityManager: Start proc 7504:app.vindica.diary/u0a146 for activity {app.vindica.diary/app.vindica.diary.SkyTestActivity}
+11-27 21:30:00.347  7504  7504 I p.vindica.diar: Late-enabling -Xcheck:jni
+11-27 21:30:00.412  7504  7504 E p.vindica.diar: Unknown bits set in runtime_flags: 0x8000
+11-27 21:30:00.412  7504  7504 W p.vindica.diar: Unexpected CPU variant for X86 using defaults: x86_64
+11-27 21:30:00.709  7504  7504 W RenderThread: type=1400 audit(0.0:57): avc: denied { write } for name="property_service" dev="tmpfs" ino=837 scontext=u:r:untrusted_app:s0:c146,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0 app=app.vindica.diary
+11-27 21:30:01.079  1879  1930 I ActivityTaskManager: Displayed app.vindica.diary/.SkyTestActivity: +775ms
+11-27 21:30:06.230  7504  7540 D ProfileInstaller: Installing profile for app.vindica.diary
+11-27 12:10:00.050  1879  2175 I ActivityManager: Force stopping app.vindica.diary appid=10146 user=0: from pid 7558
+11-27 12:10:00.050  1879  2175 I ActivityManager: Killing 7504:app.vindica.diary/u0a146 (adj 0): stop app.vindica.diary
+11-27 12:10:00.050  1879  2175 W ActivityTaskManager: Force removing ActivityRecord{3a9ae0 u0 app.vindica.diary/.SkyTestActivity t19 f}: app died, no saved state
+11-27 12:10:00.321  1879  2175 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.vindica.diary/.SkyTestActivity (has extras)} from uid 0
+11-27 12:10:00.383  1879  1932 I ActivityManager: Start proc 7568:app.vindica.diary/u0a146 for activity {app.vindica.diary/app.vindica.diary.SkyTestActivity}
+11-27 12:10:00.388  7568  7568 I p.vindica.diar: Late-enabling -Xcheck:jni
+11-27 12:10:00.473  7568  7568 E p.vindica.diar: Unknown bits set in runtime_flags: 0x8000
+11-27 12:10:00.473  7568  7568 W p.vindica.diar: Unexpected CPU variant for X86 using defaults: x86_64
+11-27 12:10:00.619  7568  7568 W RenderThread: type=1400 audit(0.0:58): avc: denied { write } for name="property_service" dev="tmpfs" ino=837 scontext=u:r:untrusted_app:s0:c146,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0 app=app.vindica.diary
+11-27 12:10:01.014  1879  1930 I ActivityTaskManager: Displayed app.vindica.diary/.SkyTestActivity: +687ms
+11-27 12:10:06.485  7568  7603 D ProfileInstaller: Installing profile for app.vindica.diary
+11-27 12:10:09.316  1879  1902 I ActivityManager: Force stopping app.vindica.diary appid=10146 user=0: from pid 7655
+11-27 12:10:09.316  1879  1902 I ActivityManager: Killing 7568:app.vindica.diary/u0a146 (adj 0): stop app.vindica.diary
+11-27 12:10:09.317  1879  1902 W ActivityTaskManager: Force removing ActivityRecord{2a54d04 u0 app.vindica.diary/.SkyTestActivity t20 f}: app died, no saved state
+11-27 12:10:09.602  1879  1902 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.vindica.diary/.SkyTestActivity (has extras)} from uid 0
+11-27 12:10:09.660  1879  1932 I ActivityManager: Start proc 7664:app.vindica.diary/u0a146 for activity {app.vindica.diary/app.vindica.diary.SkyTestActivity}
+11-27 12:10:09.678  7664  7664 I p.vindica.diar: Late-enabling -Xcheck:jni
+11-27 12:10:09.709  7664  7664 E p.vindica.diar: Unknown bits set in runtime_flags: 0x8000
+11-27 12:10:09.710  7664  7664 W p.vindica.diar: Unexpected CPU variant for X86 using defaults: x86_64
+11-27 12:10:09.869  7664  7664 W RenderThread: type=1400 audit(0.0:59): avc: denied { write } for name="property_service" dev="tmpfs" ino=837 scontext=u:r:untrusted_app:s0:c146,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0 app=app.vindica.diary
+11-27 12:10:10.307  1879  1930 I ActivityTaskManager: Displayed app.vindica.diary/.SkyTestActivity: +697ms
+11-27 21:30:02.629  7664  7710 D ProfileInstaller: Installing profile for app.vindica.diary
+11-27 21:30:03.119  1879  5194 I ActivityManager: Force stopping app.vindica.diary appid=10146 user=0: from pid 7714
+11-27 21:30:03.119  1879  5194 I ActivityManager: Killing 7664:app.vindica.diary/u0a146 (adj 0): stop app.vindica.diary
+11-27 21:30:03.119  1879  5194 W ActivityTaskManager: Force removing ActivityRecord{8588234 u0 app.vindica.diary/.SkyTestActivity t21 f}: app died, no saved state
+11-27 21:30:03.396  1879  5194 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.vindica.diary/.SkyTestActivity (has extras)} from uid 0
+11-27 21:30:03.625  1879  1932 I ActivityManager: Start proc 7721:app.vindica.diary/u0a146 for activity {app.vindica.diary/app.vindica.diary.SkyTestActivity}
+11-27 21:30:03.684  7721  7721 I p.vindica.diar: Late-enabling -Xcheck:jni
+11-27 21:30:03.754  7721  7721 E p.vindica.diar: Unknown bits set in runtime_flags: 0x8000
+11-27 21:30:03.754  7721  7721 W p.vindica.diar: Unexpected CPU variant for X86 using defaults: x86_64
+11-27 21:30:03.909  7721  7721 W RenderThread: type=1400 audit(0.0:60): avc: denied { write } for name="property_service" dev="tmpfs" ino=837 scontext=u:r:untrusted_app:s0:c146,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0 app=app.vindica.diary
+11-27 21:30:04.312  1879  1930 I ActivityTaskManager: Displayed app.vindica.diary/.SkyTestActivity: +915ms
+11-27 21:30:09.781  7721  7763 D ProfileInstaller: Installing profile for app.vindica.diary
+11-27 21:30:29.628  1879  1902 I ActivityManager: Force stopping app.vindica.diary appid=10146 user=0: from pid 7789
+11-27 21:30:29.628  1879  1902 I ActivityManager: Killing 7721:app.vindica.diary/u0a146 (adj 0): stop app.vindica.diary
+11-27 21:30:29.630  1879  1902 W ActivityTaskManager: Force removing ActivityRecord{5a50534 u0 app.vindica.diary/.SkyTestActivity t22 f}: app died, no saved state
+11-27 21:30:29.886  1879  1902 I ActivityTaskManager: START u0 {flg=0x10000000 cmp=app.vindica.diary/.SkyTestActivity (has extras)} from uid 0
+11-27 21:30:29.946  7800  7800 I p.vindica.diar: Late-enabling -Xcheck:jni
+11-27 21:30:29.954  7800  7800 E p.vindica.diar: Unknown bits set in runtime_flags: 0x8000
+11-27 21:30:29.955  7800  7800 W p.vindica.diar: Unexpected CPU variant for X86 using defaults: x86_64
+11-27 21:30:29.958  1879  1932 I ActivityManager: Start proc 7800:app.vindica.diary/u0a146 for activity {app.vindica.diary/app.vindica.diary.SkyTestActivity}
+11-27 21:30:30.179  7800  7800 W RenderThread: type=1400 audit(0.0:61): avc: denied { write } for name="property_service" dev="tmpfs" ino=837 scontext=u:r:untrusted_app:s0:c146,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0 app=app.vindica.diary
+11-27 21:30:30.676  1879  1930 I ActivityTaskManager: Displayed app.vindica.diary/.SkyTestActivity: +780ms
