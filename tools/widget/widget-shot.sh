@@ -68,6 +68,18 @@ sky --es fixture hero-ru.json --es place "45.35,25.55,Sinaia" --es wx "71,-2,0.6
 shot 14-sky-elsewhere 8
 sky --ez noplace true --es fixture hero-ru.json --es wx "45,1,0.8"
 shot 15-sky-noplace 6
+# more towns: Iași by day under rain, Cluj by night, Sighișoara by day
+settime 112712102026.00
+sky --es fixture hero-ru.json --es place "47.16,27.59," --es wx "61,3,1"
+shot 17-sky-iasi-day 8
+settime 112721302026.00
+sky --es fixture hero-ru.json --es place "46.77,23.6," --es wx "0,-1,0"
+shot 18-sky-cluj-night 8
+settime 112712102026.00
+sky --es fixture hero-ro.json --es place "46.22,24.79," --es wx "2,5,0.5"
+shot 19-sky-sighisoara-ro 8
+sky --ez noplace true --es fixture hero-ru.json --es wx "45,1,0.8"
+sleep 2
 # the phone is in Buzău (a mock fix): the app's own look finds it, in the foreground
 settime 112721302026.00
 t 20 adb shell settings put secure location_mode 3

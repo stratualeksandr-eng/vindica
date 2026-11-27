@@ -41,6 +41,7 @@ final class HeroPlace {
     private static volatile long tried;
     private static List<City> cities;
     private static Art generic;
+    private static float[] gfocus = {500, 250, 380};
 
     private HeroPlace() {}
 
@@ -53,9 +54,10 @@ final class HeroPlace {
     /* a town of the catalog: its names, where it is, how far it reaches, the line below which words may lie over it,
        the top of its landmark, and its silhouette */
     static final class City {
-        String id, ru, ro;
+        String id, ru, ro, sru = "", sro = "";
         double lat, lon, r;
         int clear, top;
+        float[] focus;
         Art art;
     }
 
@@ -145,13 +147,25 @@ final class HeroPlace {
                 x.clear = c.optInt("clear", 0);
                 x.top = c.optInt("top", x.clear);
                 x.art = art(c.getJSONArray("art"));
+                JSONObject sg = c.optJSONObject("sights");
+                if (sg != null) {
+                    x.sru = sg.optString("ru");
+                    x.sro = sg.optString("ro");
+                }
+                x.focus = focus(c.optJSONArray("focus"), new float[]{500, 60, 380});
                 out.add(x);
             }
             generic = art(o.getJSONArray("generic"));
+            gfocus = focus(o.optJSONArray("gfocus"), gfocus);
         } catch (Exception e) {
             generic = new Art();
         }
         cities = out;
+    }
+
+    private static float[] focus(JSONArray a, float[] d) {
+        if (a == null || a.length() < 3) return d;
+        return new float[]{(float) a.optDouble(0, d[0]), (float) a.optDouble(1, d[1]), (float) a.optDouble(2, d[2])};
     }
 
     private static Art art(JSONArray a) throws Exception {
@@ -226,6 +240,19 @@ final class HeroPlace {
     static Art art(Context ctx) {
         City c = city(ctx);
         return c != null ? c.art : generic;
+    }
+
+    /* what the card's picture shows of the drawing: its centre and its top and bottom, in art units */
+    static float[] focus(Context ctx) {
+        City c = city(ctx);
+        return c != null && c.focus != null ? c.focus : gfocus;
+    }
+
+    /* the landmarks by name, «Тымпа · Чёрная церковь»; nothing for places without a drawing */
+    static String sights(Context ctx, String lang) {
+        City c = city(ctx);
+        if (c == null) return "";
+        return "ro".equals(lang) ? c.sro : c.sru;
     }
 
     /* the town's name in the app's language, «Брашов» or «Buzău»; the geocoder's name for other places */

@@ -30,9 +30,9 @@ import java.util.TimeZone;
 
 /* The live wallpaper's picture: the sky of «Сегодня» full screen with everything the first page counts. The date and
    day of life, the greeting, Memento mori with TEMPVS NOSTRVM and PROTINVS VIVE, the hour and the weather, the sundial
-   (its back counts down to lights out), what is left of a life to eighty, Seneca and the meander, and under the sky
-   the town where the phone is, its landmark standing on the meander. The still parts are drawn once a minute into
-   one picture; the counters, and the back of the dial when it is turned, every second. */
+   (its back counts down to lights out), the card of the place (the town, its landmarks by name, the weather with its
+   sign, the landmark drawn in a band), what is left of a life to eighty, Seneca and the meander. The still parts
+   are drawn once a minute into one picture; the counters, and the back of the dial when it is turned, every second. */
 final class SkyScene {
     /* the sundial shows its back, the countdown to lights out */
     boolean flipped;
@@ -40,7 +40,7 @@ final class SkyScene {
     int unit;
     /* a tap on the weather asked for it anew */
     boolean wantWeather;
-    final RectF rDial = new RectF(), rHour = new RectF(), rLife = new RectF();
+    final RectF rDial = new RectF(), rHour = new RectF(), rLife = new RectF(), rCard = new RectF();
 
     private Bitmap base;
     private String baseKey = "";
@@ -48,9 +48,8 @@ final class SkyScene {
     private float u, colR, tnY, slY, wkY, dialL, dialT, dialS;
     private boolean dark, day;
     private HeroMath.Ink ink;
-    /* the skyline as last drawn: its scale, its base line, its town, the sky's lowest colour and the night's depth */
-    private float landK, landBase;
-    private HeroPlace.City landCity;
+    /* the sky as last drawn: its three colours (the card's picture takes them), the lowest one and the night's depth */
+    private int[] skyCol = {0xFF1A2034, 0xFF1A2034, 0xFF2C2421};
     private int landC2;
     private double landNight;
 
@@ -75,7 +74,7 @@ final class SkyScene {
             baseKey = "";
             return true;
         }
-        if (rHour.contains(x, y)) {
+        if (rHour.contains(x, y) || rCard.contains(x, y)) {
             wantWeather = true;
             return true;
         }
@@ -218,37 +217,13 @@ final class SkyScene {
             q.setAlpha((int) Math.round(HeroMath.cl(mo, 0, 1) * 255));
             c.drawBitmap(m, (float) (moon.x / 100 * w - px / 2.0), (float) (moon.y / 100 * h - px / 2.0), q);
         }
-        land(ctx, c, w, h, col[2], HeroMath.sunAlt(HeroMath.sunPos(now, z)));
+        skyCol = col.clone();
+        landC2 = col[2];
+        landNight = HeroMath.cl((-3 - HeroMath.sunAlt(HeroMath.sunPos(now, z))) / 5, 0, 1);
     }
 
     private float mzTopOf(int h) {
         return h - Math.max(20 * u, h * .022f) - 12 * u;
-    }
-
-    /* the town under the sky: its silhouette stands on the meander in the sky's own colours, the sun and the moon go
-       down behind it; elsewhere soft hills. The same drawing and the same colours as the page */
-    private void land(Context ctx, Canvas c, int w, int h, int c2, double alt) {
-        HeroPlace.Art art = HeroPlace.art(ctx);
-        landCity = HeroPlace.city(ctx);
-        landBase = mzTopOf(h);
-        landK = Math.min(w / 940f, h * .24f / 432f);
-        landC2 = c2;
-        landNight = HeroMath.cl((-3 - alt) / 5, 0, 1);
-        if (art == null) return;
-        Matrix m = new Matrix();
-        m.setScale(landK, landK);
-        m.postTranslate(w / 2f - 500 * landK, landBase - 420 * landK);
-        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
-        Path q = new Path();
-        for (int i = 0; i < art.paths.size(); i++) {
-            int col = tone(art.tones.get(i));
-            if (Color.alpha(col) == 0) continue;
-            p.setColor(col);
-            art.paths.get(i).transform(m, q);
-            c.drawPath(q, p);
-        }
-        p.setColor(tone(art.hasNear ? "near" : "mid"));
-        c.drawRect(0, landBase + 10 * landK, w, h, p);
     }
 
     private int tone(String t) {
@@ -275,11 +250,6 @@ final class SkyScene {
             case "lit": return HeroMath.alpha(0xFFFFFFFF, .96);
             default: return 0;
         }
-    }
-
-    /* a soft halo under words that lie over the town: dark by night, the sky's own light by day */
-    private int halo() {
-        return dark ? HeroMath.alpha(0xFF000000, .55) : HeroMath.mix(landC2, 0xFFFFFFFF, .35);
     }
 
     private static String low1(String s) {
@@ -385,8 +355,8 @@ final class SkyScene {
 
         /* the hour: the night watch or the sun's own time, and the weather after it */
         String hour = cur(d, "hour", now, 1).replace("{S}", HeroMath.fmtM(HeroMath.sunPos(now, z).tst));
-        String town = HeroPlace.name(ctx, lang), wl = wx.isEmpty() ? town : town.isEmpty() ? wx : town + ": " + low1(wx);
-        if (!wl.isEmpty()) hour = (hour.isEmpty() ? "" : hour + " ") + wl + ".";
+        String town = HeroPlace.name(ctx, lang);
+        boolean place = !town.isEmpty() || HeroWeather.now(ctx, now) != null;
         rHour.setEmpty();
         if (!hour.isEmpty()) {
             StaticLayout hl = lay(hour, tp(lit, 15 * u, k.mut, 0), (int) cw, Layout.Alignment.ALIGN_NORMAL, 1.15f, 3);
@@ -412,28 +382,21 @@ final class SkyScene {
 
         Life lv = life == null ? null : new Life(life, lab, cw, k);
         float gap = 14 * u, minDial = 190 * u;
-        HeroPlace.City lc = landCity;
-        boolean low = lc != null && lc.clear > 0;
-        float room = 0;
-        if (low) {
-            /* the landmark keeps its sky: the dial and the life total stay above it (above its roofs if need be),
-               the motto lies over the roofs */
-            float top = landBase - (420 - lc.top) * landK, clr = landBase - (420 - lc.clear) * landK, least = 170 * u * .86f;
-            room = top - gap - y - (lv != null ? lv.h + gap : 0);
-            if (room < least) room = clr - gap - y - (lv != null ? lv.h + gap : 0);
-            if (room < least) low = false;
-        }
+        Card card = place ? new Card(ctx, lang, cw, true, k, now, z) : null;
         boolean mottoOn = true;
-        if (!low) {
-            room = mzTop - gap - y - (lv != null ? lv.h + gap : 0) - mottoH - gap;
-            if (room < minDial * .86f) {
-                mottoOn = false;
-                room += mottoH + gap;
-            }
-            if (room < minDial * .86f && lv != null) {
-                room += lv.h + gap;
-                lv = null;
-            }
+        float room = mzTop - gap - y - (card != null ? card.h + gap : 0) - (lv != null ? lv.h + gap : 0) - mottoH - gap;
+        if (room < minDial * .86f) {
+            mottoOn = false;
+            room += mottoH + gap;
+        }
+        if (room < minDial * .86f && card != null) {
+            float was = card.h;
+            card = new Card(ctx, lang, cw, false, k, now, z);
+            room += was - card.h;
+        }
+        if (room < minDial * .86f && lv != null) {
+            room += lv.h + gap;
+            lv = null;
         }
         float dw = Math.max(120 * u, Math.min(Math.min(340 * u, cw), room / .86f)), dh = dw * .86f;
         dialL = (w - dw) / 2;
@@ -446,6 +409,14 @@ final class SkyScene {
         }
         y += dh + gap;
 
+        /* the place: the town, its landmarks, the weather; tapping it asks the weather again */
+        rCard.setEmpty();
+        if (card != null) {
+            card.draw(c, x0, y, k);
+            rCard.set(x0, y, x0 + cw, y + card.h);
+            y += card.h + gap;
+        }
+
         /* what is left of a life: the total (years, weeks or hours by turns), what takes the rest, the bar */
         rLife.setEmpty();
         if (lv != null) {
@@ -455,11 +426,9 @@ final class SkyScene {
             rLife.set(x0, y0 - 6 * u, x1, y - gap + 6 * u);
         }
 
-        /* Seneca: after the life total, or over the roofs of the town, with a halo under the words */
+        /* Seneca */
         if (mottoOn) {
-            float b = low ? mzTop - gap - mottoH + 13 * u : y + 13 * u;
-            mp.setShadowLayer(5 * u, 0, 0, halo());
-            ip.setShadowLayer(5 * u, 0, 0, halo());
+            float b = y + 13 * u;
             c.drawText(la1, w / 2f, b, mp);
             c.drawText(la2, w / 2f, b + 13 * u * 1.35f, mp);
             c.save();
@@ -487,6 +456,210 @@ final class SkyScene {
             p.lineTo(x + 13 * u, mzTop + 4.5f * u);
         }
         c.drawPath(p, mz);
+    }
+
+    /* the card of the place: on the left the town and its landmarks by name, on the right the weather's sign, the
+       temperature and the weather in words; below, in a band of the sky's own colours, the landmark drawn large */
+    private final class Card {
+        final float w, head, band, h, rightW;
+        final StaticLayout cityL, sightsL, phL;
+        final String temp;
+        final int icon;
+        final TextPaint tpT;
+        final HeroPlace.Art art;
+        final float[] focus;
+
+        Card(Context ctx, String lang, float w, boolean withBand, HeroMath.Ink k, long now, TimeZone z) {
+            this.w = w;
+            boolean ro = "ro".equals(lang), night = HeroMath.sunAlt(HeroMath.sunPos(now, z)) < -.833;
+            HeroWeather.Now n = HeroWeather.now(ctx, now);
+            String ph = "";
+            if (n != null) {
+                long t = Math.round(n.t);
+                temp = (t > 0 ? "+" : t < 0 ? "−" : "") + Math.abs(t) + "°";
+                ph = low1(HeroWeather.phrase(n.code, ro));
+                icon = sign(n.code, night);
+            } else {
+                temp = "";
+                icon = -1;
+            }
+            tpT = tp(forum, 36 * u, k.ink, 0);
+            tpT.setShadowLayer(0, 0, 0, 0);
+            float tw = temp.isEmpty() ? 0 : tpT.measureText(temp);
+            phL = ph.isEmpty() ? null : lay(ph, quiet(tp(lit, 13 * u, k.mut, 0)), (int) (128 * u), Layout.Alignment.ALIGN_OPPOSITE, 1.2f, 2);
+            float pw = 0;
+            if (phL != null) for (int i = 0; i < phL.getLineCount(); i++) pw = Math.max(pw, phL.getLineWidth(i));
+            rightW = icon < 0 && temp.isEmpty() ? 0 : 34 * u + 8 * u + Math.max(tw, pw);
+            float lw = w - 32 * u - rightW - (rightW > 0 ? 10 * u : 0);
+            String town = HeroPlace.name(ctx, lang), sights = HeroPlace.sights(ctx, lang);
+            cityL = lay(town, quiet(tp(forum, 30 * u, k.ink, 0)), (int) lw, Layout.Alignment.ALIGN_NORMAL, 1.05f, 1);
+            sightsL = sights.isEmpty() ? null : lay(sights.toUpperCase(Locale.forLanguageTag(ro ? "ro" : "ru")), quiet(tp(forum, 11 * u, k.brz, .15f)), (int) lw, Layout.Alignment.ALIGN_NORMAL, 1.25f, 2);
+            float lh = cityL.getHeight() + (sightsL != null ? 6 * u + sightsL.getHeight() : 0);
+            float rh = Math.max(icon >= 0 ? 34 * u : 0, tempH() + (phL != null ? 3 * u + phL.getHeight() : 0));
+            head = 14 * u + Math.max(lh, rh) + 12 * u;
+            band = withBand ? 100 * u : 0;
+            h = head + band;
+            art = HeroPlace.art(ctx);
+            focus = HeroPlace.focus(ctx);
+        }
+
+        private float tempH() {
+            if (temp.isEmpty()) return 0;
+            Paint.FontMetrics fm = tpT.getFontMetrics();
+            return -fm.ascent + fm.descent * .3f;
+        }
+
+        void draw(Canvas c, float x, float y, HeroMath.Ink k) {
+            float r = 18 * u, lw = Math.max(1, .6f * u);
+            int gline = dark ? 0x26ECE4D6 : 0x262E2216;
+            RectF box = new RectF(x, y, x + w, y + h);
+            Paint g = new Paint(Paint.ANTI_ALIAS_FLAG);
+            g.setColor(dark ? 0x57181820 : 0x73FCFAF6);
+            c.drawRoundRect(box, r, r, g);
+            if (band > 0 && art != null) {
+                float bt = y + head;
+                c.save();
+                Path clip = new Path();
+                clip.addRoundRect(box, r, r, Path.Direction.CW);
+                c.clipPath(clip);
+                c.clipRect(x, bt, x + w, y + h);
+                Paint sp = new Paint(Paint.DITHER_FLAG);
+                sp.setShader(new LinearGradient(0, bt, 0, y + h, skyCol, new float[]{0f, .55f, 1f}, Shader.TileMode.CLAMP));
+                c.drawRect(x, bt, x + w, y + h, sp);
+                float fh = focus[2] - focus[1], s = band / fh, fx0 = focus[0] - w / s / 2;
+                Matrix m = new Matrix();
+                m.setTranslate(-fx0, -focus[1]);
+                m.postScale(s, s);
+                m.postTranslate(x, bt);
+                Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+                Path q = new Path();
+                for (int i = 0; i < art.paths.size(); i++) {
+                    int col = cardTone(art.tones.get(i));
+                    if (Color.alpha(col) == 0) continue;
+                    p.setColor(col);
+                    art.paths.get(i).transform(m, q);
+                    c.drawPath(q, p);
+                }
+                c.restore();
+                Paint ln = new Paint(Paint.ANTI_ALIAS_FLAG);
+                ln.setColor(gline);
+                ln.setStrokeWidth(lw);
+                c.drawLine(x, bt, x + w, bt, ln);
+            }
+            Paint b = new Paint(Paint.ANTI_ALIAS_FLAG);
+            b.setStyle(Paint.Style.STROKE);
+            b.setStrokeWidth(lw);
+            b.setColor(gline);
+            c.drawRoundRect(box, r, r, b);
+            float top = y + 14 * u, inner = head - 26 * u;
+            float lh = cityL.getHeight() + (sightsL != null ? 6 * u + sightsL.getHeight() : 0), ly = top + (inner - lh) / 2;
+            c.save();
+            c.translate(x + 16 * u, ly);
+            cityL.draw(c);
+            c.restore();
+            if (sightsL != null) {
+                c.save();
+                c.translate(x + 16 * u, ly + cityL.getHeight() + 6 * u);
+                sightsL.draw(c);
+                c.restore();
+            }
+            if (rightW > 0) {
+                float rx = x + w - 16 * u, col = rightW - 42 * u;
+                if (icon >= 0) sign(c, icon, rx - col - 8 * u - 34 * u, top + (inner - 34 * u) / 2, 34 * u, k.ink);
+                float rh = tempH() + (phL != null ? 3 * u + phL.getHeight() : 0), cy = top + (inner - rh) / 2;
+                if (!temp.isEmpty()) {
+                    tpT.setTextAlign(Paint.Align.RIGHT);
+                    c.drawText(temp, rx, cy - tpT.getFontMetrics().ascent, tpT);
+                    cy += tempH();
+                }
+                if (phL != null) {
+                    c.save();
+                    c.translate(rx - phL.getWidth(), cy + 3 * u);
+                    phL.draw(c);
+                    c.restore();
+                }
+            }
+        }
+    }
+
+    /* text on the card's glass needs no halo */
+    private static TextPaint quiet(TextPaint p) {
+        p.setShadowLayer(0, 0, 0, 0);
+        return p;
+    }
+
+    /* the picture's tones are a step darker than the sky's horizon would have them, so the landmark stands out */
+    private int cardTone(String t) {
+        switch (t) {
+            case "far": return tone("mid");
+            case "mid": return tone("near");
+            case "near": return HeroMath.mix(tone("near"), 0xFF000000, .26);
+            case "det": return tone("mid");
+            default: return tone(t);
+        }
+    }
+
+    /* the weather's sign for a WMO code: 0 cloud, 1 fog, 2 rain, 3 snow, 4 sun, 5 moon */
+    private static int sign(int code, boolean night) {
+        if (code <= 1) return night ? 5 : 4;
+        if (code == 45 || code == 48) return 1;
+        if ((code >= 71 && code <= 77) || code == 85 || code == 86) return 3;
+        if (code >= 51) return 2;
+        return 0;
+    }
+
+    /* the signs, drawn as the app draws its icons: thin bronze-ink strokes on a 24-unit square */
+    private static void sign(Canvas c, int icon, float x, float y, float size, int color) {
+        Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+        p.setStyle(Paint.Style.STROKE);
+        p.setStrokeWidth(1.35f);
+        p.setStrokeCap(Paint.Cap.ROUND);
+        p.setStrokeJoin(Paint.Join.ROUND);
+        p.setColor(color);
+        c.save();
+        c.translate(x, y);
+        c.scale(size / 24f, size / 24f);
+        if (icon == 4) {
+            c.drawCircle(12, 12, 4, p);
+            for (int i = 0; i < 8; i++) {
+                double a = i * Math.PI / 4;
+                c.drawLine((float) (12 + 6.5 * Math.cos(a)), (float) (12 + 6.5 * Math.sin(a)), (float) (12 + 8.6 * Math.cos(a)), (float) (12 + 8.6 * Math.sin(a)), p);
+            }
+        } else if (icon == 5) {
+            Path a = new Path(), b = new Path();
+            a.addCircle(11, 12.5f, 7.2f, Path.Direction.CW);
+            b.addCircle(15.6f, 9.2f, 6.2f, Path.Direction.CW);
+            a.op(b, Path.Op.DIFFERENCE);
+            c.drawPath(a, p);
+        } else {
+            float dy = icon == 0 ? .5f : icon == 1 ? -4f : -3f;
+            Path cl = new Path(), t = new Path();
+            cl.addCircle(8.6f, 13.6f + dy, 4.2f, Path.Direction.CW);
+            t.addCircle(13f, 10.6f + dy, 5.4f, Path.Direction.CW);
+            cl.op(t, Path.Op.UNION);
+            t.reset();
+            t.addCircle(17.4f, 14.4f + dy, 3.6f, Path.Direction.CW);
+            cl.op(t, Path.Op.UNION);
+            t.reset();
+            t.addRect(8.6f, 13.6f + dy, 17.4f, 18f + dy, Path.Direction.CW);
+            cl.op(t, Path.Op.UNION);
+            c.drawPath(cl, p);
+            if (icon == 1) {
+                c.drawLine(4, 17, 20, 17, p);
+                c.drawLine(6, 20.5f, 18, 20.5f, p);
+            } else if (icon == 2) {
+                c.drawLine(8, 17.5f, 7, 20.5f, p);
+                c.drawLine(12, 17.5f, 11, 20.5f, p);
+                c.drawLine(16, 17.5f, 15, 20.5f, p);
+            } else if (icon == 3) {
+                Paint d = new Paint(p);
+                d.setStyle(Paint.Style.FILL);
+                c.drawCircle(8, 18.8f, .9f, d);
+                c.drawCircle(12, 20.4f, .9f, d);
+                c.drawCircle(16, 18.8f, .9f, d);
+            }
+        }
+        c.restore();
     }
 
     /* the life panel, measured once and drawn centred */

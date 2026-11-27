@@ -125,6 +125,12 @@ final class HeroWeather {
         return phrase(n.code, "ro".equals(lang)) + ", " + (t > 0 ? "+" : t < 0 ? "−" : "") + Math.abs(t) + "°";
     }
 
+    /* the last answer when it is fresh enough and for this place, else null */
+    static Now now(Context ctx, long now) {
+        Now n = get(ctx);
+        return n == null || now - n.at > OLD || !here(ctx, n) ? null : n;
+    }
+
     static double cover(Context ctx, long now) {
         Now n = get(ctx);
         return n == null || now - n.at > OLD || !here(ctx, n) ? 0 : n.cover;
