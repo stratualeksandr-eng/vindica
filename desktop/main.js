@@ -12,6 +12,24 @@ const ICON = path.join(__dirname, 'build', 'icon.png');
 const HIDDEN = process.argv.includes('--hidden');
 let win = null, tray = null, quitting = false;
 
+// The tray speaks the language chosen in the page's settings (Русский, Română, English), read from the page once it has loaded.
+const WORDS = {
+  ru: { name: 'Верни себя себе', open: 'Открыть', login: 'Запускать вместе с компьютером', quit: 'Выйти' },
+  ro: { name: 'Revendică-te ție însuți', open: 'Deschide', login: 'Pornește odată cu calculatorul', quit: 'Ieși' },
+  en: { name: 'Reclaim Yourself', open: 'Open', login: 'Start with the computer', quit: 'Quit' }
+};
+let lang = 'ru';
+const W = () => WORDS[lang] || WORDS.ru;
+function readLang() {
+  if (!win) return;
+  win.webContents.executeJavaScript("(()=>{try{return localStorage.getItem('vindica.lang')||''}catch(e){return''}})()", true).then(v => {
+    const l = WORDS[v] ? v : 'ru';
+    if (l === lang) return;
+    lang = l;
+    if (tray) { tray.setToolTip(W().name); tray.setContextMenu(menu()); }
+  }).catch(() => {});
+}
+
 // The window opens large, fitted to the screen (on a wide window the page shows more tasks side by side),
 // and remembers its size and place between runs.
 const BOUNDS = () => path.join(app.getPath('userData'), 'window.json');
@@ -51,6 +69,7 @@ function create(visible) {
   });
   win.setMenuBarVisibility(false);
   win.loadURL('app://vindica/index.html');
+  win.webContents.on('did-finish-load', readLang);
   // maximize() would also show the window, so it waits until the window is meant to be seen
   win.once('ready-to-show', () => { if (visible) { if (b.max) win.maximize(); win.show(); } });
   let kt = 0;
@@ -66,10 +85,10 @@ function create(visible) {
 function menu() {
   const login = app.getLoginItemSettings().openAtLogin;
   return Menu.buildFromTemplate([
-    { label: 'Открыть', click: show },
-    { label: 'Запускать вместе с компьютером', type: 'checkbox', checked: login, click: it => { app.setLoginItemSettings({ openAtLogin: it.checked, openAsHidden: true, args: ['--hidden'] }); tray.setContextMenu(menu()); } },
+    { label: W().open, click: show },
+    { label: W().login, type: 'checkbox', checked: login, click: it => { app.setLoginItemSettings({ openAtLogin: it.checked, openAsHidden: true, args: ['--hidden'] }); tray.setContextMenu(menu()); } },
     { type: 'separator' },
-    { label: 'Выйти', click: () => { quitting = true; app.quit(); } }
+    { label: W().quit, click: () => { quitting = true; app.quit(); } }
   ]);
 }
 
@@ -92,7 +111,7 @@ app.whenReady().then(() => {
   create(!HIDDEN);
   const img = nativeImage.createFromPath(path.join(__dirname, 'build', 'tray.png'));
   tray = new Tray(img);
-  tray.setToolTip('Верни себя себе');
+  tray.setToolTip(W().name);
   tray.on('click', show);
   tray.setContextMenu(menu());
 });

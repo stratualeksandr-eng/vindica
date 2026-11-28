@@ -317,7 +317,9 @@ public class HeroWidget extends AppWidgetProvider {
     private static void page(Context ctx, RemoteViews v, Frame f, int wDp, int hDp, float dn) {
         HeroData d = f.d;
         HeroMath.Ink k = f.ink;
-        boolean ro = "ro".equals(d.str("lang", Locale.getDefault().getLanguage()));
+        String lg = d.str("lang", Locale.getDefault().getLanguage());
+        /* the Romanian and English greetings are the longer ones: «Bună dimineața,», «Good afternoon,» */
+        boolean wide = "ro".equals(lg) || "en".equals(lg);
         v.setImageViewResource(R.id.hero_logo, f.dark ? R.drawable.hero_logo_dark : R.drawable.hero_logo_light);
         v.setImageViewResource(R.id.hero_mz, f.dark ? R.drawable.hero_mz_dark : R.drawable.hero_mz_light);
         v.setTextColor(R.id.hero_brand_t, k.ink);
@@ -328,7 +330,7 @@ public class HeroWidget extends AppWidgetProvider {
         /* the date and the day of life */
         JSONArray date = d.cur("date", f.now);
         v.setTextColor(R.id.hero_date, k.mut);
-        v.setTextViewText(R.id.hero_date, date != null ? HeroData.at(date, 1) : fallbackDate(f.now, ro));
+        v.setTextViewText(R.id.hero_date, date != null ? HeroData.at(date, 1) : fallbackDate(f.now, lg));
 
         /* the greeting beside Memento mori, in Forum, as wide as the room it has */
         String l1, l2;
@@ -342,7 +344,7 @@ public class HeroWidget extends AppWidgetProvider {
         }
         boolean mm = d.cur("mm", f.now) != null;
         float roomDp = wDp - 32 - (mm ? 136 : 0);
-        float sizeDp = Math.min(Math.max(36, Math.min(46, wDp * .1f)), (wDp - 32 - 136) / (ro ? 6.5f : 6.12f));
+        float sizeDp = Math.min(Math.max(36, Math.min(46, wDp * .1f)), (wDp - 32 - 136) / (wide ? 6.5f : 6.12f));
         if (!mm) sizeDp = Math.max(36, Math.min(46, wDp * .1f));
         v.setImageViewBitmap(R.id.hero_hello, HeroDraw.helloCached(ctx, l1, l2, dp(roomDp, dn), sizeDp * dn, k.ink));
         v.setContentDescription(R.id.hero_hello, (l1 + " " + l2).trim());
@@ -390,9 +392,11 @@ public class HeroWidget extends AppWidgetProvider {
         }
     }
 
-    static String fallbackDate(long now, boolean ro) {
-        String s = new SimpleDateFormat("EEEE, d MMMM", ro ? new Locale("ro") : new Locale("ru")).format(new Date(now));
-        return s.isEmpty() ? s : s.substring(0, 1).toUpperCase(ro ? new Locale("ro") : new Locale("ru")) + s.substring(1);
+    /* the date when the page has not said it yet: «Суббота, 28 ноября», «Sâmbătă, 28 noiembrie», «Saturday, 28 November» */
+    static String fallbackDate(long now, String lang) {
+        Locale l = "ro".equals(lang) ? new Locale("ro") : "en".equals(lang) ? Locale.UK : new Locale("ru");
+        String s = new SimpleDateFormat("EEEE, d MMMM", l).format(new Date(now));
+        return s.isEmpty() ? s : s.substring(0, 1).toUpperCase(l) + s.substring(1);
     }
 
     static String fallbackHello(Context ctx, long now) {

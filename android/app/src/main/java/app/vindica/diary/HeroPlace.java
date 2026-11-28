@@ -53,7 +53,7 @@ final class HeroPlace {
     /* a town of the catalog: its names, where it is, how far it reaches, the line below which words may lie over it,
        the top of its landmark, and its silhouette */
     static final class City {
-        String id, ru, ro;
+        String id, ru, ro, en;
         double lat, lon, r;
         int clear, top;
         Art art;
@@ -139,6 +139,7 @@ final class HeroPlace {
                 x.id = c.getString("id");
                 x.ru = c.optString("ru");
                 x.ro = c.optString("ro");
+                x.en = c.optString("en", x.ro);
                 x.lat = c.getDouble("lat");
                 x.lon = c.getDouble("lon");
                 x.r = c.optDouble("r", 10);
@@ -228,10 +229,10 @@ final class HeroPlace {
         return c != null ? c.art : generic;
     }
 
-    /* the town's name in the app's language, «Брашов» or «Buzău»; the geocoder's name for other places */
+    /* the town's name in the app's language, «Брашов», «Buzău» or «Brașov»; the geocoder's name for other places */
     static String name(Context ctx, String lang) {
         City c = city(ctx);
-        if (c != null) return "ro".equals(lang) ? c.ro : c.ru;
+        if (c != null) return "ro".equals(lang) ? c.ro : "en".equals(lang) ? c.en : c.ru;
         Place p = load(ctx);
         return p != null && p.name != null ? p.name : "";
     }

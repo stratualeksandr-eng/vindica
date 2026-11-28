@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_shop_name">Shopping</string>
+    <string name="widget_shop_desc">Shopping list: tap what you’ve bought and it goes</string>
+    <string name="widget_shop_add">Add an item</string>
+    <string name="widget_shop_empty">The list is empty</string>
+    <string name="widget_hero_name">Today</string>
+    <string name="widget_hero_desc">The first page: the sundial, the greeting, Memento mori and the countdowns</string>
+    <string name="widget_hero_small_name">Clock</string>
+    <string name="widget_hero_small_desc">The sundial and the countdowns: TEMPVS NOSTRVM, until bedtime, until the end of work</string>
+    <string name="hero_brand">Reclaim Yourself</string>
+    <string name="hero_motto">Everything else belongs to others; only time is ours. Seneca</string>
+    <string name="hero_dial">Sundial</string>
+    <string-array name="hero_hello">
+        <item>Good night</item>
+        <item>Good morning</item>
+        <item>Good afternoon</item>
+        <item>Good evening</item>
+    </string-array>
+    <string name="sky_name">The “Reclaim Yourself” sky</string>
+    <string name="sky_desc">The app’s sky: the sun and moon in their places, the sundial, every life counter and the weather</string>
+    <string name="sky_author">Reclaim Yourself</string>
+</resources>

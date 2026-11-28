@@ -294,13 +294,14 @@ final class SkyScene {
     private void paintBase(Context ctx, Canvas c, int w, int h, long now, TimeZone z, HeroData d, String lang, String wx, double cover) {
         u = Math.min(w / 390f, h / 830f);
         float cw = 350 * u, x0 = (w - 390 * u) / 2 + 20 * u, x1 = x0 + cw;
-        boolean ro = "ro".equals(lang);
+        /* the Romanian and English greetings are the longer ones: «Bună dimineața,», «Good afternoon,» */
+        boolean wide = "ro".equals(lang) || "en".equals(lang);
         HeroMath.Ink k = ink;
         sky(ctx, c, w, h, now, z, cover);
 
         /* the date and the day of life */
         float y = Math.max(44 * u, h * .045f);
-        String date = d.has() ? cur(d, "date", now, 1) : HeroWidget.fallbackDate(now, ro);
+        String date = d.has() ? cur(d, "date", now, 1) : HeroWidget.fallbackDate(now, lang);
         StaticLayout dl = lay(date, tp(lit, 15 * u, k.mut, 0), (int) cw, Layout.Alignment.ALIGN_NORMAL, 1.1f, 2);
         c.save();
         c.translate(x0, y);
@@ -319,7 +320,7 @@ final class SkyScene {
             l1 = HeroWidget.fallbackHello(ctx, now);
             l2 = "";
         }
-        float F = Math.min(Math.max(36, 39), (350 - (mm != null ? 140 : 0)) / (ro ? 6.5f : 6.12f)) * u;
+        float F = Math.min(Math.max(36, 39), (350 - (mm != null ? 140 : 0)) / (wide ? 6.5f : 6.12f)) * u;
         if (mm == null) F = 39 * u;
         TextPaint gp = tp(forum, F, k.ink, 0);
         float tw = Math.max(gp.measureText(l1), l2.isEmpty() ? 0 : gp.measureText(l2));
